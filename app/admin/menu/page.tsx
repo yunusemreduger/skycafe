@@ -16,7 +16,8 @@ export default function MenuPage() {
   const [showModal, setShowModal] = useState(false);
   const [editItem, setEditItem] = useState<MenuItem | null>(null);
   const [filterCat, setFilterCat] = useState<string>('all');
-  const [form, setForm] = useState({ name: '', description: '', price: '', category: CATEGORY_ORDER[0], emoji: '☕', available: true, featured: false });
+  const [form, setForm] = useState({ name: '', description: '', price: '', category: CATEGORY_ORDER[0], emoji: '☕', available: true, featured: false, stockItemId: '', stockDeductAmount: '1' });
+  const [stockItems, setStockItems] = useState<{ id: string; name: string; unit: string }[]>([]);
 
   const fetchItems = async () => {
     const res = await fetch('/api/menu');
@@ -24,17 +25,20 @@ export default function MenuPage() {
     setLoading(false);
   };
 
-  useEffect(() => { fetchItems(); }, []);
+  useEffect(() => {
+    fetchItems();
+    fetch('/api/stock').then(r => r.json()).then(setStockItems);
+  }, []);
 
   const openCreate = () => {
     setEditItem(null);
-    setForm({ name: '', description: '', price: '', category: CATEGORY_ORDER[0], emoji: '☕', available: true, featured: false });
+    setForm({ name: '', description: '', price: '', category: CATEGORY_ORDER[0], emoji: '☕', available: true, featured: false, stockItemId: '', stockDeductAmount: '1' });
     setShowModal(true);
   };
 
   const openEdit = (item: MenuItem) => {
     setEditItem(item);
-    setForm({ name: item.name, description: item.description, price: String(item.price), category: item.category, emoji: item.emoji, available: item.available, featured: item.featured });
+    setForm({ name: item.name, description: item.description, price: String(item.price), category: item.category, emoji: item.emoji, available: item.available, featured: item.featured, stockItemId: item.stockItemId || '', stockDeductAmount: String(item.stockDeductAmount ?? 1) });
     setShowModal(true);
   };
 
@@ -276,6 +280,38 @@ export default function MenuPage() {
                   <input type="checkbox" checked={form.featured} onChange={e => setForm(f => ({ ...f, featured: e.target.checked }))} />
                   ⭐ Öne Çıkan
                 </label>
+              </div>
+            </div>
+
+            {/* Stok bağlantısı */}
+            <div style={{ marginTop: '16px', padding: '14px', background: '#0d0d18', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.06)' }}>
+              <div style={{ fontSize: '12px', color: '#64748b', marginBottom: '10px', fontWeight: 600 }}>📦 Stok Bağlantısı (opsiyonel)</div>
+              <div style={{ display: 'flex', gap: '10px' }}>
+                <div style={{ flex: 2 }}>
+                  <label style={{ fontSize: '11px', color: '#475569', display: 'block', marginBottom: '6px' }}>Stok Kalemi</label>
+                  <select
+                    value={form.stockItemId}
+                    onChange={e => setForm(f => ({ ...f, stockItemId: e.target.value }))}
+                    style={{ width: '100%', padding: '8px 10px', background: '#12121a', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', color: '#f8fafc', fontSize: '13px', outline: 'none' }}
+                  >
+                    <option value="">— Bağlantı yok —</option>
+                    {stockItems.map(s => (
+                      <option key={s.id} value={s.id}>{s.name} ({s.unit})</option>
+                    ))}
+                  </select>
+                </div>
+                <div style={{ flex: 1 }}>
+                  <label style={{ fontSize: '11px', color: '#475569', display: 'block', marginBottom: '6px' }}>Sipariş başına düş</label>
+                  <input
+                    type="number"
+                    min="0"
+                    step="0.1"
+                    value={form.stockDeductAmount}
+                    onChange={e => setForm(f => ({ ...f, stockDeductAmount: e.target.value }))}
+                    disabled={!form.stockItemId}
+                    style={{ width: '100%', padding: '8px 10px', background: '#12121a', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', color: form.stockItemId ? '#f8fafc' : '#374151', fontSize: '13px', outline: 'none' }}
+                  />
+                </div>
               </div>
             </div>
 

@@ -14,6 +14,8 @@ export interface MenuItem {
   available: boolean;
   featured: boolean;
   createdAt: string;
+  stockItemId?: string;
+  stockDeductAmount?: number;
 }
 
 export interface OrderItem {

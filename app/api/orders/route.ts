@@ -38,6 +38,20 @@ export async function POST(req: NextRequest) {
   };
 
   db.orders.push(order);
+
+  // Stok bağlantısı olan ürünleri stoktan düş
+  for (const item of order.items) {
+    const menuItem = db.menuItems.find(m => m.id === item.menuItemId);
+    if (menuItem?.stockItemId) {
+      const stockIdx = db.stockItems.findIndex(s => s.id === menuItem.stockItemId);
+      if (stockIdx !== -1) {
+        const deduct = (menuItem.stockDeductAmount ?? 1) * item.quantity;
+        db.stockItems[stockIdx].quantity = Math.max(0, db.stockItems[stockIdx].quantity - deduct);
+        db.stockItems[stockIdx].lastUpdated = new Date().toISOString();
+      }
+    }
+  }
+
   writeDB(db);
   return NextResponse.json(order, { status: 201 });
 }
