@@ -1,0 +1,304 @@
+{
+  "menuItems": [
+    {
+      "id": "m1",
+      "name": "Club Sandviç",
+      "description": "Dana jambon, domates, kaşar peyniri, baby marul, salatalık, pesto sos. Patates kızartması ile.",
+      "price": 380,
+      "category": "Sandviçler",
+      "emoji": "🥪",
+      "available": true,
+      "featured": true,
+      "createdAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "m2",
+      "name": "Tavuklu Sandviç",
+      "description": "Izgara tavuk, domates, baby marul, salatalık, pesto sos. Patates kızartması ile.",
+      "price": 450,
+      "category": "Sandviçler",
+      "emoji": "🥙",
+      "available": true,
+      "featured": false,
+      "createdAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "m3",
+      "name": "Ton Balıklı Sandviç",
+      "description": "Ton balığı, baby marul, salatalık, domates, pesto sos. Patates kızartması ile.",
+      "price": 480,
+      "category": "Sandviçler",
+      "emoji": "🐟",
+      "available": true,
+      "featured": false,
+      "createdAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "m4",
+      "name": "Sky Breakfast",
+      "description": "Avokado, salatalık, haşlanmış yumurta (5 adet), 1 adet mini club sandviç, kuru kayısı, ceviz, kırmızı pancar, filtre kahve.",
+      "price": 450,
+      "category": "Kahvaltı",
+      "emoji": "🍳",
+      "available": true,
+      "featured": true,
+      "createdAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "m5",
+      "name": "Dip Avokado & Çırpılmış Yumurtalı Sandviç",
+      "description": "Ekşi mayalı ekmek, dip avokado, çırpılmış yumurta, baby marul, domates, salatalık, karabiber, tuz, zeytinyağı, pesto sos. Filtre kahve ile servis edilir.",
+      "price": 480,
+      "category": "Fit / Protein",
+      "emoji": "🥑",
+      "available": true,
+      "featured": true,
+      "createdAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "m6",
+      "name": "Basmati Tavuk (250 gr)",
+      "description": "Haşlanmış tavuk, basmati pirinç, baby marul.",
+      "price": 350,
+      "category": "Fit / Protein",
+      "emoji": "🍗",
+      "available": true,
+      "featured": false,
+      "createdAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "m7",
+      "name": "Protein Shake",
+      "description": "30 gr protein, muz, süt, ceviz.",
+      "price": 350,
+      "category": "Fit / Protein",
+      "emoji": "🥤",
+      "available": true,
+      "featured": false,
+      "createdAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "m8",
+      "name": "Sky Protein Salata",
+      "description": "Akdeniz yeşillikleri, baby marul, portakal marineli ızgara tavuk, avokado, domates, salatalık, kırmızı pancar, ceviz, nar ekşili sos.",
+      "price": 550,
+      "category": "Fit / Protein",
+      "emoji": "🥗",
+      "available": true,
+      "featured": false,
+      "createdAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "m9",
+      "name": "Köfte",
+      "description": "6 adet köfte, baby marul, çarliston biber, domates, sweet chili sos. Tortilla ekmek dilimleri ile.",
+      "price": 500,
+      "category": "Ana Yemekler",
+      "emoji": "🍖",
+      "available": true,
+      "featured": true,
+      "createdAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "m10",
+      "name": "Izgara Tavuk",
+      "description": "290 gr ızgara tavuk, baby marul, çarliston biber, domates, sweet chili sos. Tortilla ekmek dilimleri ile.",
+      "price": 500,
+      "category": "Ana Yemekler",
+      "emoji": "🍗",
+      "available": true,
+      "featured": false,
+      "createdAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "m11",
+      "name": "Extra Pilav",
+      "description": "Basmati pirinç.",
+      "price": 50,
+      "category": "Ana Yemekler",
+      "emoji": "🍚",
+      "available": true,
+      "featured": false,
+      "createdAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "m12",
+      "name": "Parmesan Fries",
+      "description": "Patates kızartması, parmesan peyniri.",
+      "price": 250,
+      "category": "Sides",
+      "emoji": "🍟",
+      "available": true,
+      "featured": false,
+      "createdAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "m13",
+      "name": "Parmesan Chips",
+      "description": "Patates cipsi, parmesan peyniri.",
+      "price": 200,
+      "category": "Sides",
+      "emoji": "🫙",
+      "available": true,
+      "featured": false,
+      "createdAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "m14",
+      "name": "Karpuz Peynir Nane",
+      "description": "4 dilim karpuz, beyaz peynir, taze nane.",
+      "price": 250,
+      "category": "Dondurma & Meyve",
+      "emoji": "🍉",
+      "available": true,
+      "featured": true,
+      "createdAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "m15",
+      "name": "Mevsim Meyveleri",
+      "description": "Fiyat için sorunuz.",
+      "price": 0,
+      "category": "Dondurma & Meyve",
+      "emoji": "🍓",
+      "available": true,
+      "featured": false,
+      "createdAt": "2024-01-01T00:00:00.000Z"
+    },
+    {
+      "id": "m16",
+      "name": "Waffle Cup Dondurma Meyve",
+      "description": "Algida kaymaklı dondurma ile servis edilir. Kaymaklıdır.",
+      "price": 200,
+      "category": "Dondurma & Meyve",
+      "emoji": "🧇",
+      "available": true,
+      "featured": false,
+      "createdAt": "2024-01-01T00:00:00.000Z"
+    }
+  ],
+  "orders": [
+    {
+      "id": "mqvh2gmxy2iik75f1u8",
+      "tableNumber": "12",
+      "items": [
+        {
+          "menuItemId": "m1",
+          "name": "Club Sandviç",
+          "price": 380,
+          "quantity": 1
+        }
+      ],
+      "total": 380,
+      "status": "cancelled",
+      "paymentMethod": "cash",
+      "paymentStatus": "unpaid",
+      "createdAt": "2026-06-26T21:57:50.649Z",
+      "updatedAt": "2026-06-26T21:57:59.887Z"
+    },
+    {
+      "id": "mqvh2u39mzw4d1g450c",
+      "tableNumber": "12",
+      "items": [
+        {
+          "menuItemId": "m1",
+          "name": "Club Sandviç",
+          "price": 380,
+          "quantity": 1
+        }
+      ],
+      "total": 380,
+      "status": "cancelled",
+      "paymentMethod": "cash",
+      "paymentStatus": "paid",
+      "createdAt": "2026-06-26T21:58:08.085Z",
+      "updatedAt": "2026-06-26T21:58:15.563Z"
+    }
+  ],
+  "stockItems": [
+    {
+      "id": "1",
+      "name": "Kahve Çekirdeği",
+      "unit": "kg",
+      "quantity": 5,
+      "minQuantity": 2,
+      "costPerUnit": 150,
+      "lastUpdated": "2026-06-26T21:28:31.999Z"
+    },
+    {
+      "id": "2",
+      "name": "Süt",
+      "unit": "litre",
+      "quantity": 20,
+      "minQuantity": 5,
+      "costPerUnit": 20,
+      "lastUpdated": "2026-06-26T21:28:31.999Z"
+    },
+    {
+      "id": "3",
+      "name": "Şeker",
+      "unit": "kg",
+      "quantity": 10,
+      "minQuantity": 3,
+      "costPerUnit": 25,
+      "lastUpdated": "2026-06-26T21:28:31.999Z"
+    },
+    {
+      "id": "4",
+      "name": "Un",
+      "unit": "kg",
+      "quantity": 8,
+      "minQuantity": 3,
+      "costPerUnit": 20,
+      "lastUpdated": "2026-06-26T21:28:31.999Z"
+    },
+    {
+      "id": "5",
+      "name": "Tereyağı",
+      "unit": "kg",
+      "quantity": 3,
+      "minQuantity": 1,
+      "costPerUnit": 180,
+      "lastUpdated": "2026-06-26T21:28:31.999Z"
+    },
+    {
+      "id": "6",
+      "name": "Limon",
+      "unit": "adet",
+      "quantity": 50,
+      "minQuantity": 20,
+      "costPerUnit": 3,
+      "lastUpdated": "2026-06-26T21:28:31.999Z"
+    }
+  ],
+  "financeRecords": [
+    {
+      "id": "1",
+      "type": "income",
+      "category": "Satış",
+      "amount": 1250,
+      "description": "Günlük kasa geliri",
+      "date": "2026-06-26",
+      "createdAt": "2026-06-26T21:28:31.999Z"
+    },
+    {
+      "id": "2",
+      "type": "expense",
+      "category": "Malzeme",
+      "amount": 320,
+      "description": "Kahve ve süt alımı",
+      "date": "2026-06-26",
+      "createdAt": "2026-06-26T21:28:31.999Z"
+    },
+    {
+      "id": "mqvh2xuolevy3qkpwui",
+      "type": "income",
+      "category": "Satış",
+      "amount": 380,
+      "description": "Daire 12 — Nakit ödeme",
+      "date": "2026-06-26",
+      "createdAt": "2026-06-26T21:58:12.960Z"
+    }
+  ],
+  "shopOpen": true
+}
