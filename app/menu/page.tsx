@@ -36,6 +36,7 @@ export default function MenuPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const [daireError, setDaireError] = useState(false);
   const [shopOpen, setShopOpen] = useState(true);
+  const [withinHours, setWithinHours] = useState(true);
 
   useEffect(() => {
     const loadData = async () => {
@@ -48,6 +49,7 @@ export default function MenuPage() {
         const statusData = await statusRes.json();
         setMenuItems(menuData.filter(i => i.available));
         setShopOpen(statusData.shopOpen ?? true);
+        setWithinHours(statusData.withinHours ?? true);
       } catch (e) {
         console.error('Veri yüklenemedi:', e);
       } finally {
@@ -132,18 +134,25 @@ export default function MenuPage() {
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           fontSize: '36px', margin: '0 auto 24px',
         }}>🔴</div>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px', marginBottom: '16px' }}>
-          <div style={{ fontSize: '22px', fontWeight: 800 }}>
-            <span style={{ background: 'linear-gradient(135deg, #f59e0b, #fbbf24)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Sky</span>
-            <span style={{ color: '#f8fafc' }}>Café</span>
-          </div>
+        <div style={{ fontSize: '22px', fontWeight: 800, marginBottom: '16px' }}>
+          <span style={{ background: 'linear-gradient(135deg, #f59e0b, #fbbf24)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>Sky</span>
+          <span style={{ color: '#f8fafc' }}>Café</span>
         </div>
         <h2 style={{ fontSize: '20px', fontWeight: 700, color: '#f8fafc', marginBottom: '10px' }}>
-          Şu an kapalıyız
+          {withinHours ? 'Şu an kapalıyız' : 'Çalışma saatleri dışında'}
         </h2>
-        <p style={{ color: '#64748b', fontSize: '14px', lineHeight: '1.6' }}>
-          Siparişler şu an alınmıyor. Lütfen daha sonra tekrar deneyin.
+        <p style={{ color: '#64748b', fontSize: '14px', lineHeight: '1.6', marginBottom: '20px' }}>
+          {withinHours
+            ? 'Siparişler şu an alınmıyor. Lütfen daha sonra tekrar deneyin.'
+            : 'Kafemiz saat 10:00 ile 20:00 arasında hizmet vermektedir.'}
         </p>
+        <div style={{
+          background: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.2)',
+          borderRadius: '12px', padding: '14px 20px',
+          fontSize: '14px', color: '#f59e0b', fontWeight: 600,
+        }}>
+          🕙 Açılış: 10:00 &nbsp;·&nbsp; 🕗 Kapanış: 20:00
+        </div>
       </div>
     </div>
   );
