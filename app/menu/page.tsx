@@ -115,7 +115,7 @@ export default function MenuPage() {
   };
 
   if (loading) return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(rgba(10,10,15,0.88), rgba(10,10,15,0.94)), url(https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=1920&q=80) center/cover fixed', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(rgba(10,10,15,0.88), rgba(10,10,15,0.94)), url(https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=1920&q=80) center/cover fixed', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <div style={{ textAlign: 'center' }}>
         <div style={{ fontSize: '48px', marginBottom: '16px' }}>☕</div>
         <div style={{ color: '#94a3b8', fontSize: '15px' }}>Menü hazırlanıyor...</div>
@@ -124,7 +124,7 @@ export default function MenuPage() {
   );
 
   if (!shopOpen) return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(rgba(10,10,15,0.88), rgba(10,10,15,0.94)), url(https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=1920&q=80) center/cover fixed', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(rgba(10,10,15,0.88), rgba(10,10,15,0.94)), url(https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=1920&q=80) center/cover fixed', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
       <div style={{ textAlign: 'center', maxWidth: '340px' }}>
         <div style={{
           width: '80px', height: '80px', borderRadius: '24px',
@@ -149,7 +149,7 @@ export default function MenuPage() {
   );
 
   if (orderSent) return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(rgba(10,10,15,0.88), rgba(10,10,15,0.94)), url(https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=1920&q=80) center/cover fixed', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(rgba(10,10,15,0.88), rgba(10,10,15,0.94)), url(https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=1920&q=80) center/cover fixed', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
       <div style={{ textAlign: 'center', maxWidth: '360px' }}>
         <div style={{ fontSize: '64px', marginBottom: '20px' }}>✅</div>
         <h2 style={{ fontSize: '24px', fontWeight: 700, marginBottom: '10px', color: '#f8fafc' }}>Siparişiniz Alındı!</h2>
@@ -170,7 +170,7 @@ export default function MenuPage() {
   );
 
   return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(rgba(10,10,15,0.88), rgba(10,10,15,0.94)), url(https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?w=1920&q=80) center/cover fixed', paddingBottom: '100px' }}>
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(rgba(10,10,15,0.88), rgba(10,10,15,0.94)), url(https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=1920&q=80) center/cover fixed', paddingBottom: '100px' }}>
       {/* Header */}
       <div style={{
         background: 'rgba(13,13,24,0.97)',
