@@ -50,7 +50,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }, []);
 
   return (
-    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', background: 'linear-gradient(rgba(10,10,15,0.93), rgba(10,10,15,0.96)), url(https://images.unsplash.com/photo-1470337458703-46ad1756a187?w=1920&q=80) center/cover fixed' }}>
+    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', background: 'linear-gradient(rgba(10,10,15,0.93), rgba(10,10,15,0.96)), url(https://i.pinimg.com/736x/a0/e8/62/a0e862a298652353eeecba4aabe7564a.jpg) center/cover fixed' }}>
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div
