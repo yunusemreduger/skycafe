@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 interface MenuItem {
   id: string; name: string; description: string; price: number;
   category: string; emoji: string; available: boolean; featured: boolean; createdAt: string;
+  stockItemId?: string; stockDeductAmount?: number;
 }
 
 const CATEGORY_ORDER = ['Sandviçler', 'Kahvaltı', 'Fit / Protein', 'Ana Yemekler', 'Sides', 'Dondurma & Meyve'];
