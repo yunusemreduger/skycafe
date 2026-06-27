@@ -35,6 +35,7 @@ export default function MenuPage() {
   const [submitting, setSubmitting] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [daireError, setDaireError] = useState(false);
+  const [nameError, setNameError] = useState(false);
   const [shopOpen, setShopOpen] = useState(true);
   const [withinHours, setWithinHours] = useState(true);
 
@@ -89,11 +90,12 @@ export default function MenuPage() {
   const totalPrice = cart.reduce((s, c) => s + c.price * c.quantity, 0);
 
   const submitOrder = async () => {
-    if (!daireNo.trim()) {
-      setDaireError(true);
-      return;
-    }
-    setDaireError(false);
+    let hasError = false;
+    if (!daireNo.trim()) { setDaireError(true); hasError = true; }
+    else setDaireError(false);
+    if (!customerName.trim()) { setNameError(true); hasError = true; }
+    else setNameError(false);
+    if (hasError) return;
     if (cart.length === 0) return;
     setSubmitting(true);
     try {
@@ -475,14 +477,15 @@ export default function MenuPage() {
                 )}
               </div>
 
-              {/* Ad (isteğe bağlı) */}
+              {/* Ad (zorunlu) */}
               <div style={{ marginBottom: '12px' }}>
-                <label style={{ fontSize: '12px', color: '#64748b', display: 'block', marginBottom: '6px' }}>Adınız (isteğe bağlı)</label>
+                <label style={{ fontSize: '12px', color: nameError ? '#f87171' : '#64748b', display: 'block', marginBottom: '6px' }}>Adınız <span style={{ color: '#f87171' }}>*</span></label>
                 <input
                   type="text" placeholder="Adınız..."
-                  value={customerName} onChange={e => setCustomerName(e.target.value)}
-                  style={{ width: '100%', padding: '10px 14px', background: '#1a1a26', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#f8fafc', fontSize: '14px', outline: 'none' }}
+                  value={customerName} onChange={e => { setCustomerName(e.target.value); setNameError(false); }}
+                  style={{ width: '100%', padding: '10px 14px', background: nameError ? 'rgba(239,68,68,0.08)' : '#1a1a26', border: nameError ? '1px solid rgba(239,68,68,0.5)' : '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#f8fafc', fontSize: '14px', outline: 'none' }}
                 />
+                {nameError && <p style={{ color: '#f87171', fontSize: '11px', marginTop: '4px' }}>Lütfen adınızı girin</p>}
               </div>
 
               {/* Not */}

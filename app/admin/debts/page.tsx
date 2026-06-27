@@ -35,6 +35,7 @@ export default function DebtsPage() {
   const [selectedItems, setSelectedItems] = useState<SelectedItem[]>([]);
   const [useMenu, setUseMenu] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [editDebtId, setEditDebtId] = useState<string | null>(null); // mevcut borç güncellemesi için
 
   const fetchDebts = async () => {
     const res = await fetch('/api/debts');
@@ -79,26 +80,45 @@ export default function DebtsPage() {
 
   const menuTotal = selectedItems.reduce((s, i) => s + i.price * i.quantity, 0);
 
-  const openModal = (prefill?: { tableNumber: string; customerName?: string }) => {
+  const openModal = (prefill?: { tableNumber: string; customerName?: string; debtId?: string }) => {
     setForm({ tableNumber: prefill?.tableNumber ?? '', customerName: prefill?.customerName ?? '', amount: '', description: '' });
     setSelectedItems([]);
     setUseMenu(true);
+    setEditDebtId(prefill?.debtId ?? null);
     setShowAddModal(true);
   };
 
   const addDebt = async () => {
     if (!form.tableNumber) return;
-    const amount = useMenu ? menuTotal : Number(form.amount);
-    const description = useMenu
+    const addAmount = useMenu ? menuTotal : Number(form.amount);
+    const addDescription = useMenu
       ? selectedItems.map(i => `${i.emoji} ${i.name} x${i.quantity}`).join(', ')
       : form.description;
-    if (!amount) return;
+    if (!addAmount) return;
     setSaving(true);
-    await fetch('/api/debts', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ tableNumber: form.tableNumber, customerName: form.customerName, amount, description }),
-    });
+
+    if (editDebtId) {
+      // Mevcut borca ekle
+      const existing = debts.find(d => d.id === editDebtId);
+      if (existing) {
+        await fetch(`/api/debts/${editDebtId}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            amount: existing.amount + addAmount,
+            description: existing.description + ' + ' + addDescription,
+          }),
+        });
+      }
+    } else {
+      // Yeni borç oluştur
+      await fetch('/api/debts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tableNumber: form.tableNumber, customerName: form.customerName, amount: addAmount, description: addDescription }),
+      });
+    }
+
     setShowAddModal(false);
     setSaving(false);
     fetchDebts();
@@ -190,7 +210,7 @@ export default function DebtsPage() {
                   <>
                     <span style={{ fontSize: '12px', color: '#f87171', background: 'rgba(239,68,68,0.1)', padding: '4px 10px', borderRadius: '6px' }}>Ödenmedi</span>
                     <button onClick={() => markPaid(debt.id)} style={{ padding: '7px 14px', borderRadius: '8px', border: 'none', background: 'rgba(34,197,94,0.15)', color: '#4ade80', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}>✓ Ödendi</button>
-                    <button onClick={() => openModal({ tableNumber: debt.tableNumber, customerName: debt.customerName })} style={{ padding: '7px 12px', borderRadius: '8px', border: 'none', background: 'rgba(245,158,11,0.15)', color: '#f59e0b', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}>+ Ekle</button>
+                    <button onClick={() => openModal({ tableNumber: debt.tableNumber, customerName: debt.customerName, debtId: debt.id })} style={{ padding: '7px 12px', borderRadius: '8px', border: 'none', background: 'rgba(245,158,11,0.15)', color: '#f59e0b', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}>+ Ekle</button>
                   </>
                 ) : (
                   <span style={{ fontSize: '12px', color: '#4ade80', background: 'rgba(34,197,94,0.1)', padding: '4px 10px', borderRadius: '6px' }}>
