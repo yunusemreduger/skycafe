@@ -9,6 +9,7 @@ const navItems = [
   { href: '/admin/menu', label: 'Menü', icon: '📋' },
   { href: '/admin/stock', label: 'Stok', icon: '📦' },
   { href: '/admin/finance', label: 'Finans', icon: '💰' },
+  { href: '/admin/debts', label: 'Borç Defteri', icon: '📒' },
   { href: '/admin/qr', label: 'QR Kodlar', icon: '⬛' },
 ];
 

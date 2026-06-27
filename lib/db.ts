@@ -60,11 +60,24 @@ export interface FinanceRecord {
   createdAt: string;
 }
 
+export interface DebtRecord {
+  id: string;
+  tableNumber: string;
+  customerName?: string;
+  amount: number;
+  description: string;
+  orderId?: string;
+  status: 'unpaid' | 'paid';
+  createdAt: string;
+  paidAt?: string;
+}
+
 export interface DB {
   menuItems: MenuItem[];
   orders: Order[];
   stockItems: StockItem[];
   financeRecords: FinanceRecord[];
+  debts: DebtRecord[];
   shopOpen: boolean;
 }
 
@@ -107,6 +120,7 @@ const defaultDB: DB = {
     { id: '1', type: 'income', category: 'Satış', amount: 1250, description: 'Günlük kasa geliri', date: new Date().toISOString().split('T')[0], createdAt: new Date().toISOString() },
     { id: '2', type: 'expense', category: 'Malzeme', amount: 320, description: 'Kahve ve süt alımı', date: new Date().toISOString().split('T')[0], createdAt: new Date().toISOString() },
   ],
+  debts: [],
 };
 
 function ensureDataDir() {

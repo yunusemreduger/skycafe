@@ -259,14 +259,42 @@ export default function OrdersPage() {
                   </span>
                 </div>
                 {order.paymentStatus === 'unpaid' ? (
-                  <button
-                    onClick={() => fetch(`/api/orders/${order.id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ paymentStatus: 'paid' }) }).then(fetchOrders)}
-                    style={{
-                      padding: '5px 12px', borderRadius: '7px',
-                      background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)',
-                      color: '#4ade80', fontSize: '11px', cursor: 'pointer', fontWeight: 600
-                    }}
-                  >💰 Ödeme Alındı</button>
+                  <div style={{ display: 'flex', gap: '6px' }}>
+                    <button
+                      onClick={() => fetch(`/api/orders/${order.id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ paymentStatus: 'paid' }) }).then(fetchOrders)}
+                      style={{
+                        padding: '5px 12px', borderRadius: '7px',
+                        background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)',
+                        color: '#4ade80', fontSize: '11px', cursor: 'pointer', fontWeight: 600
+                      }}
+                    >💰 Ödendi</button>
+                    <button
+                      onClick={async () => {
+                        await fetch('/api/debts', {
+                          method: 'POST',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({
+                            tableNumber: order.tableNumber,
+                            customerName: order.customerName,
+                            amount: order.total,
+                            description: order.items.map(i => `${i.name} x${i.quantity}`).join(', '),
+                            orderId: order.id,
+                          }),
+                        });
+                        await fetch(`/api/orders/${order.id}`, {
+                          method: 'PUT',
+                          headers: { 'Content-Type': 'application/json' },
+                          body: JSON.stringify({ paymentStatus: 'paid' }),
+                        });
+                        fetchOrders();
+                      }}
+                      style={{
+                        padding: '5px 12px', borderRadius: '7px',
+                        background: 'rgba(245,158,11,0.15)', border: '1px solid rgba(245,158,11,0.3)',
+                        color: '#f59e0b', fontSize: '11px', cursor: 'pointer', fontWeight: 600
+                      }}
+                    >📒 Borca Yaz</button>
+                  </div>
                 ) : (
                   <span style={{ fontSize: '11px', color: '#4ade80', fontWeight: 600 }}>✓ Ödendi</span>
                 )}
