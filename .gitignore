@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# local db + fuse artıkları
+/data/db.json
+.fuse_hidden*

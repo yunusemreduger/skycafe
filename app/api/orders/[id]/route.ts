@@ -3,7 +3,7 @@ import { readDB, writeDB, generateId } from '@/lib/db';
 
 export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const db = readDB();
+  const db = await readDB();
   const body = await req.json();
   const idx = db.orders.findIndex(o => o.id === id);
   if (idx === -1) return NextResponse.json({ error: 'Not found' }, { status: 404 });
@@ -25,6 +25,6 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
     });
   }
 
-  writeDB(db);
+  await writeDB(db);
   return NextResponse.json(db.orders[idx]);
 }

@@ -2,14 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import { readDB, writeDB, generateId } from '@/lib/db';
 
 export async function GET() {
-  const db = readDB();
+  const db = await readDB();
   return NextResponse.json((db.debts ?? []).sort((a, b) =>
     new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   ));
 }
 
 export async function POST(req: NextRequest) {
-  const db = readDB();
+  const db = await readDB();
   const body = await req.json();
   const debt = {
     id: generateId(),
@@ -23,6 +23,6 @@ export async function POST(req: NextRequest) {
   };
   if (!db.debts) db.debts = [];
   db.debts.push(debt);
-  writeDB(db);
+  await writeDB(db);
   return NextResponse.json(debt, { status: 201 });
 }

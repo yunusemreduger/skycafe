@@ -2,12 +2,12 @@ import { NextRequest, NextResponse } from 'next/server';
 import { readDB, writeDB, generateId, MenuItem } from '@/lib/db';
 
 export async function GET() {
-  const db = readDB();
+  const db = await readDB();
   return NextResponse.json(db.menuItems);
 }
 
 export async function POST(req: NextRequest) {
-  const db = readDB();
+  const db = await readDB();
   const body = await req.json();
   const item: MenuItem = {
     id: generateId(),
@@ -21,6 +21,6 @@ export async function POST(req: NextRequest) {
     createdAt: new Date().toISOString(),
   };
   db.menuItems.push(item);
-  writeDB(db);
+  await writeDB(db);
   return NextResponse.json(item, { status: 201 });
 }

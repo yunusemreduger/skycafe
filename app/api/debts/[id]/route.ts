@@ -3,7 +3,7 @@ import { readDB, writeDB, generateId } from '@/lib/db';
 
 export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const db = readDB();
+  const db = await readDB();
   if (!db.debts) db.debts = [];
   const idx = db.debts.findIndex(d => d.id === id);
   if (idx === -1) return NextResponse.json({ error: 'Not found' }, { status: 404 });
@@ -26,15 +26,15 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
     });
   }
 
-  writeDB(db);
+  await writeDB(db);
   return NextResponse.json(db.debts[idx]);
 }
 
 export async function DELETE(_: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const db = readDB();
+  const db = await readDB();
   if (!db.debts) db.debts = [];
   db.debts = db.debts.filter(d => d.id !== id);
-  writeDB(db);
+  await writeDB(db);
   return NextResponse.json({ success: true });
 }

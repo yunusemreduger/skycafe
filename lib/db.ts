@@ -84,28 +84,25 @@ export interface DB {
 const defaultDB: DB = {
   shopOpen: true,
   menuItems: [
-    // Sandviçler
-    { id: 'm1', name: 'Club Sandviç', description: 'Dana jambon, domates, kaşar peyniri, baby marul, salatalık, pesto sos. Patates kızartması ile.', price: 380, category: 'Sandviçler', emoji: '🥪', available: true, featured: true, createdAt: new Date().toISOString() },
-    { id: 'm2', name: 'Tavuklu Sandviç', description: 'Izgara tavuk, domates, baby marul, salatalık, pesto sos. Patates kızartması ile.', price: 450, category: 'Sandviçler', emoji: '🥙', available: true, featured: false, createdAt: new Date().toISOString() },
-    { id: 'm3', name: 'Ton Balıklı Sandviç', description: 'Ton balığı, baby marul, salatalık, domates, pesto sos. Patates kızartması ile.', price: 480, category: 'Sandviçler', emoji: '🐟', available: true, featured: false, createdAt: new Date().toISOString() },
-    // Kahvaltı
-    { id: 'm4', name: 'Sky Breakfast', description: 'Avokado, salatalık, haşlanmış yumurta (5 adet), 1 adet mini club sandviç, kuru kayısı, ceviz, kırmızı pancar, filtre kahve.', price: 450, category: 'Kahvaltı', emoji: '🍳', available: true, featured: true, createdAt: new Date().toISOString() },
-    // Fit / Protein
-    { id: 'm5', name: 'Dip Avokado & Çırpılmış Yumurtalı Sandviç', description: 'Ekşi mayalı ekmek, dip avokado, çırpılmış yumurta, baby marul, domates, salatalık, karabiber, tuz, zeytinyağı, pesto sos. Filtre kahve ile servis edilir.', price: 480, category: 'Fit / Protein', emoji: '🥑', available: true, featured: true, createdAt: new Date().toISOString() },
-    { id: 'm6', name: 'Basmati Tavuk (250 gr)', description: 'Haşlanmış tavuk, basmati pirinç, baby marul.', price: 350, category: 'Fit / Protein', emoji: '🍗', available: true, featured: false, createdAt: new Date().toISOString() },
-    { id: 'm7', name: 'Protein Shake', description: '30 gr protein, muz, süt, ceviz.', price: 350, category: 'Fit / Protein', emoji: '🥤', available: true, featured: false, createdAt: new Date().toISOString() },
-    { id: 'm8', name: 'Sky Protein Salata', description: 'Akdeniz yeşillikleri, baby marul, portakal marineli ızgara tavuk, avokado, domates, salatalık, kırmızı pancar, ceviz, nar ekşili sos.', price: 550, category: 'Fit / Protein', emoji: '🥗', available: true, featured: false, createdAt: new Date().toISOString() },
-    // Ana Yemekler
-    { id: 'm9', name: 'Köfte', description: '6 adet köfte, baby marul, çarliston biber, domates, sweet chili sos. Tortilla ekmek dilimleri ile.', price: 500, category: 'Ana Yemekler', emoji: '🍖', available: true, featured: true, createdAt: new Date().toISOString() },
-    { id: 'm10', name: 'Izgara Tavuk', description: '290 gr ızgara tavuk, baby marul, çarliston biber, domates, sweet chili sos. Tortilla ekmek dilimleri ile.', price: 500, category: 'Ana Yemekler', emoji: '🍗', available: true, featured: false, createdAt: new Date().toISOString() },
-    { id: 'm11', name: 'Extra Pilav', description: 'Basmati pirinç.', price: 50, category: 'Ana Yemekler', emoji: '🍚', available: true, featured: false, createdAt: new Date().toISOString() },
-    // Sides
-    { id: 'm12', name: 'Parmesan Fries', description: 'Patates kızartması, parmesan peyniri.', price: 250, category: 'Sides', emoji: '🍟', available: true, featured: false, createdAt: new Date().toISOString() },
-    { id: 'm13', name: 'Parmesan Chips', description: 'Patates cipsi, parmesan peyniri.', price: 200, category: 'Sides', emoji: '🫙', available: true, featured: false, createdAt: new Date().toISOString() },
-    // Dondurma & Meyve
-    { id: 'm14', name: 'Karpuz Peynir Nane', description: '4 dilim karpuz, beyaz peynir, taze nane.', price: 250, category: 'Dondurma & Meyve', emoji: '🍉', available: true, featured: true, createdAt: new Date().toISOString() },
-    { id: 'm15', name: 'Mevsim Meyveleri', description: 'Fiyat için sorunuz.', price: 0, category: 'Dondurma & Meyve', emoji: '🍓', available: true, featured: false, createdAt: new Date().toISOString() },
-    { id: 'm16', name: 'Waffle Cup Dondurma Meyve', description: 'Algida kaymaklı dondurma ile servis edilir. Kaymaklıdır.', price: 200, category: 'Dondurma & Meyve', emoji: '🧇', available: true, featured: false, createdAt: new Date().toISOString() },
+    // Smoothie
+    { id: 'm1', name: 'Power PB', description: 'Muz, Açaí tozu, Fıstık ezmesi, Granola, Badem sütü · 510 kcal', price: 550, category: 'Smoothie', emoji: '🥤', available: true, featured: true, createdAt: new Date().toISOString() },
+    { id: 'm2', name: 'Berry Boost', description: 'Karışık orman meyveleri, Ejder meyvesi, Muz, Bal, Tercihe göre süt · 330 kcal', price: 550, category: 'Smoothie', emoji: '🫐', available: true, featured: true, createdAt: new Date().toISOString() },
+    { id: 'm3', name: 'Tropical Escape', description: 'Mango, Ananas, Keten tohumu, Kolajen, Hindistan cevizi suyu · 290 kcal', price: 550, category: 'Smoothie', emoji: '🥭', available: true, featured: false, createdAt: new Date().toISOString() },
+    { id: 'm4', name: 'Nutty Fuel', description: 'Muz, Süzme yoğurt, Fıstık ezmesi, Tarçın, Badem sütü · 445 kcal', price: 550, category: 'Smoothie', emoji: '🥜', available: true, featured: false, createdAt: new Date().toISOString() },
+    { id: 'm5', name: 'Berry Bliss', description: 'Çilek, Muz, Süzme yoğurt, Bal, Yağlı süt · 365 kcal', price: 550, category: 'Smoothie', emoji: '🍓', available: true, featured: false, createdAt: new Date().toISOString() },
+    { id: 'm6', name: 'Green Gold', description: 'Kale, Ispanak, Mango, Zencefil, Hindistan cevizi suyu · 165 kcal', price: 550, category: 'Smoothie', emoji: '🥬', available: true, featured: false, createdAt: new Date().toISOString() },
+    { id: 'm7', name: 'Golden Boost', description: 'Zencefil, Zerdeçal, Muz, Mango, Ananas, Bal, Hindistan cevizi suyu · 290 kcal', price: 550, category: 'Smoothie', emoji: '✨', available: true, featured: false, createdAt: new Date().toISOString() },
+    { id: 'm8', name: 'Date Power', description: 'Hurma, Muz, Badem ezmesi, Kakao nibs, Tarçın, Yağlı süt · 575 kcal', price: 550, category: 'Smoothie', emoji: '🌴', available: true, featured: false, createdAt: new Date().toISOString() },
+    // Kahve
+    { id: 'm9', name: 'Espresso', description: 'Saf espresso', price: 140, category: 'Kahve', emoji: '☕', available: true, featured: false, createdAt: new Date().toISOString() },
+    { id: 'm10', name: 'Americano', description: 'Espresso + sıcak su', price: 180, category: 'Kahve', emoji: '☕', available: true, featured: false, createdAt: new Date().toISOString() },
+    { id: 'm11', name: 'Latte', description: 'Espresso + buharda ısıtılmış süt', price: 200, category: 'Kahve', emoji: '🥛', available: true, featured: true, createdAt: new Date().toISOString() },
+    { id: 'm12', name: 'Cappuccino', description: 'Espresso + süt köpüğü', price: 200, category: 'Kahve', emoji: '☕', available: true, featured: false, createdAt: new Date().toISOString() },
+    { id: 'm13', name: 'Ice Americano', description: 'Soğuk Americano, buzlu servis', price: 190, category: 'Kahve', emoji: '🧊', available: true, featured: false, createdAt: new Date().toISOString() },
+    { id: 'm14', name: 'Ice Latte', description: 'Soğuk latte, buzlu servis', price: 210, category: 'Kahve', emoji: '🧊', available: true, featured: false, createdAt: new Date().toISOString() },
+    // Matcha
+    { id: 'm15', name: 'Matcha Latte', description: 'Sıcak matcha latte', price: 220, category: 'Matcha', emoji: '🍵', available: true, featured: true, createdAt: new Date().toISOString() },
+    { id: 'm16', name: 'Ice Matcha Latte', description: 'Soğuk matcha latte, buzlu servis', price: 230, category: 'Matcha', emoji: '🍵', available: true, featured: false, createdAt: new Date().toISOString() },
   ],
   orders: [],
   stockItems: [
@@ -123,6 +120,34 @@ const defaultDB: DB = {
   debts: [],
 };
 
+// ---------------------------------------------------------------------------
+// Storage katmanı
+// Production: Upstash Redis (REST API) — Vercel gibi serverless ortamlarda kalıcı
+// Local dev:  data/db.json dosyası
+// ---------------------------------------------------------------------------
+
+const REDIS_URL = process.env.UPSTASH_REDIS_REST_URL;
+const REDIS_TOKEN = process.env.UPSTASH_REDIS_REST_TOKEN;
+const REDIS_KEY = 'skycafe:db';
+const useRedis = Boolean(REDIS_URL && REDIS_TOKEN);
+
+async function redisCommand(command: unknown[]): Promise<unknown> {
+  const res = await fetch(REDIS_URL!, {
+    method: 'POST',
+    headers: {
+      Authorization: `Bearer ${REDIS_TOKEN}`,
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(command),
+    cache: 'no-store',
+  });
+  if (!res.ok) {
+    throw new Error(`Redis hatası (${res.status}): ${await res.text()}`);
+  }
+  const data = await res.json();
+  return data.result;
+}
+
 function ensureDataDir() {
   if (!fs.existsSync(DB_PATH)) {
     fs.mkdirSync(DB_PATH, { recursive: true });
@@ -132,15 +157,48 @@ function ensureDataDir() {
   }
 }
 
-export function readDB(): DB {
-  ensureDataDir();
-  const content = fs.readFileSync(DB_FILE, 'utf-8');
-  return JSON.parse(content);
+/** Eksik alanları defaultDB'den tamamlar (şema değişikliklerine karşı) */
+function normalize(db: Partial<DB>): DB {
+  return {
+    menuItems: db.menuItems ?? defaultDB.menuItems,
+    orders: db.orders ?? [],
+    stockItems: db.stockItems ?? defaultDB.stockItems,
+    financeRecords: db.financeRecords ?? [],
+    debts: db.debts ?? [],
+    shopOpen: db.shopOpen ?? true,
+  };
 }
 
-export function writeDB(db: DB): void {
+export async function readDB(): Promise<DB> {
+  if (useRedis) {
+    const raw = await redisCommand(['GET', REDIS_KEY]);
+    if (!raw) {
+      await writeDB(defaultDB);
+      return defaultDB;
+    }
+    const parsed = typeof raw === 'string' ? JSON.parse(raw) : raw;
+    return normalize(parsed);
+  }
+
+  ensureDataDir();
+  const content = fs.readFileSync(DB_FILE, 'utf-8');
+  return normalize(JSON.parse(content));
+}
+
+export async function writeDB(db: DB): Promise<void> {
+  if (useRedis) {
+    await redisCommand(['SET', REDIS_KEY, JSON.stringify(db)]);
+    return;
+  }
+
   ensureDataDir();
   fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2));
+}
+
+/** DB'yi fabrika ayarlarına döndürür (menü + stok default, sipariş/borç/finans sıfır) */
+export async function resetDB(): Promise<DB> {
+  await writeDB(defaultDB);
+  return defaultDB;
 }
 
 export function generateId(): string {

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { readDB, writeDB } from '@/lib/db';
 
 export async function GET() {
-  const db = readDB();
+  const db = await readDB();
   const manualOpen = db.shopOpen ?? true;
 
   // Saat kontrolü: 10:00 - 20:00 arası açık (Türkiye saati UTC+3)
@@ -20,9 +20,9 @@ export async function GET() {
 }
 
 export async function PUT(req: NextRequest) {
-  const db = readDB();
+  const db = await readDB();
   const { shopOpen } = await req.json();
   db.shopOpen = Boolean(shopOpen);
-  writeDB(db);
+  await writeDB(db);
   return NextResponse.json({ shopOpen: db.shopOpen });
 }

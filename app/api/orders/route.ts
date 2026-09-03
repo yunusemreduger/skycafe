@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { readDB, writeDB, generateId, Order } from '@/lib/db';
 
 export async function GET(req: NextRequest) {
-  const db = readDB();
+  const db = await readDB();
   const { searchParams } = new URL(req.url);
   const status = searchParams.get('status');
   const since = searchParams.get('since');
@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
-  const db = readDB();
+  const db = await readDB();
   const body = await req.json();
 
   const total = body.items.reduce((sum: number, item: { price: number; quantity: number }) =>
@@ -52,6 +52,6 @@ export async function POST(req: NextRequest) {
     }
   }
 
-  writeDB(db);
+  await writeDB(db);
   return NextResponse.json(order, { status: 201 });
 }

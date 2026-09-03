@@ -9,12 +9,9 @@ interface MenuItem {
 interface CartItem extends MenuItem { quantity: number; }
 
 const CATEGORY_ICONS: Record<string, string> = {
-  'Sıcak İçecekler': '☕',
-  'Soğuk İçecekler': '🧊',
-  'Tatlılar': '🍰',
-  'Atıştırmalıklar': '🥪',
-  'Yemekler': '🍽️',
-  'Diğer': '✨',
+  'Smoothie': '🥤',
+  'Kahve': '☕',
+  'Matcha': '🍵',
 };
 
 export default function MenuPage() {

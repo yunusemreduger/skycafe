@@ -7,7 +7,7 @@ interface MenuItem {
   stockItemId?: string; stockDeductAmount?: number;
 }
 
-const CATEGORY_ORDER = ['Sandviçler', 'Kahvaltı', 'Fit / Protein', 'Ana Yemekler', 'Sides', 'Dondurma & Meyve'];
+const CATEGORY_ORDER = ['Smoothie', 'Kahve', 'Matcha'];
 
 const EMOJIS = ['☕', '🥛', '🧊', '🍋', '🍊', '🫖', '🍵', '🥤', '🍫', '🍰', '🧁', '🍩', '🥪', '🥔', '🍕', '🥗', '🍽️'];
 
