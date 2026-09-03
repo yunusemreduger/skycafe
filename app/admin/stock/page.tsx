@@ -14,7 +14,7 @@ export default function StockPage() {
   const [adjustItem, setAdjustItem] = useState<StockItem | null>(null);
   const [adjustValue, setAdjustValue] = useState('');
   const [adjustMode, setAdjustMode] = useState<'add' | 'set'>('add');
-  const [form, setForm] = useState({ name: '', unit: 'kg', quantity: '', minQuantity: '', costPerUnit: '' });
+  const [form, setForm] = useState({ name: '', unit: 'ml', quantity: '', minQuantity: '', costPerUnit: '' });
 
   const fetchItems = async () => {
     const res = await fetch('/api/stock');
@@ -26,7 +26,7 @@ export default function StockPage() {
 
   const openCreate = () => {
     setEditItem(null);
-    setForm({ name: '', unit: 'kg', quantity: '', minQuantity: '', costPerUnit: '' });
+    setForm({ name: '', unit: 'ml', quantity: '', minQuantity: '', costPerUnit: '' });
     setShowModal(true);
   };
 
@@ -208,7 +208,7 @@ export default function StockPage() {
                 <label style={{ fontSize: '12px', color: '#64748b', display: 'block', marginBottom: '6px' }}>Birim</label>
                 <select value={form.unit} onChange={e => setForm(f => ({ ...f, unit: e.target.value }))}
                   style={{ width: '100%', padding: '10px 14px', background: '#1a1a26', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#f8fafc', fontSize: '14px', outline: 'none' }}>
-                  {['kg', 'litre', 'adet', 'gram', 'paket', 'kutu'].map(u => <option key={u} value={u}>{u}</option>)}
+                  {['ml', 'gr', 'adet'].map(u => <option key={u} value={u}>{u}</option>)}
                 </select>
               </div>
             </div>

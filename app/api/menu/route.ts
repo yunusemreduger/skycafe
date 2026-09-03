@@ -18,6 +18,11 @@ export async function POST(req: NextRequest) {
     emoji: body.emoji || '🍽️',
     available: body.available ?? true,
     featured: body.featured ?? false,
+    recipe: Array.isArray(body.recipe)
+      ? body.recipe
+          .filter((l: { stockItemId?: string; amount?: number }) => l.stockItemId && Number(l.amount) > 0)
+          .map((l: { stockItemId: string; amount: number }) => ({ stockItemId: l.stockItemId, amount: Number(l.amount) }))
+      : [],
     createdAt: new Date().toISOString(),
   };
   db.menuItems.push(item);

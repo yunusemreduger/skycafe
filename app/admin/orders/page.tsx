@@ -69,11 +69,18 @@ export default function OrdersPage() {
   }, [fetchOrders]);
 
   const updateStatus = async (id: string, status: string) => {
-    await fetch(`/api/orders/${id}`, {
+    const res = await fetch(`/api/orders/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ status }),
     });
+    // Stok yetersizse uyar
+    try {
+      const data = await res.json();
+      if (data.stockWarnings?.length) {
+        alert('⚠️ Stok uyarısı — sipariş tamamlandı ama bazı malzemeler yetersizdi:\n\n' + data.stockWarnings.join('\n'));
+      }
+    } catch {}
     fetchOrders();
   };
 

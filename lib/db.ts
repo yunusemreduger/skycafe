@@ -4,6 +4,13 @@ import path from 'path';
 const DB_PATH = path.join(process.cwd(), 'data');
 const DB_FILE = path.join(DB_PATH, 'db.json');
 
+/** Bir menü ürününün reçetesindeki tek bir malzeme satırı */
+export interface RecipeLine {
+  stockItemId: string;
+  /** Stok kaleminin kendi biriminde (ml / gr / adet) tüketilen miktar */
+  amount: number;
+}
+
 export interface MenuItem {
   id: string;
   name: string;
@@ -14,7 +21,11 @@ export interface MenuItem {
   available: boolean;
   featured: boolean;
   createdAt: string;
+  /** Ürün satıldığında stoktan düşecek malzemeler */
+  recipe?: RecipeLine[];
+  /** @deprecated recipe kullanılıyor — eski kayıtlar için geriye dönük destek */
   stockItemId?: string;
+  /** @deprecated recipe kullanılıyor */
   stockDeductAmount?: number;
 }
 
@@ -36,6 +47,8 @@ export interface Order {
   paymentMethod: 'cash' | 'card';
   paymentStatus: 'unpaid' | 'paid';
   note?: string;
+  /** Reçete stoktan düşüldü mü — çift düşmeyi engeller */
+  stockDeducted?: boolean;
   createdAt: string;
   updatedAt: string;
 }
@@ -85,7 +98,14 @@ const defaultDB: DB = {
   shopOpen: true,
   menuItems: [
     // Smoothie
-    { id: 'm1', name: 'Power PB', description: 'Muz, Açaí tozu, Fıstık ezmesi, Granola, Badem sütü · 510 kcal', price: 550, category: 'Smoothie', emoji: '🥤', available: true, featured: true, createdAt: new Date().toISOString() },
+    { id: 'm1', name: 'Power PB', description: 'Muz, Açaí tozu, Fıstık ezmesi, Granola, Badem sütü · 510 kcal', price: 550, category: 'Smoothie', emoji: '🥤', available: true, featured: true, createdAt: new Date().toISOString(),
+      recipe: [
+        { stockItemId: 's3', amount: 1 },    // Muz — 1 adet
+        { stockItemId: 's5', amount: 5 },    // Açaí tozu — 5 gr
+        { stockItemId: 's4', amount: 20 },   // Fıstık ezmesi — 20 gr
+        { stockItemId: 's2', amount: 25 },   // Granola — 25 gr
+        { stockItemId: 's1', amount: 130 },  // Badem sütü — 130 ml
+      ] },
     { id: 'm2', name: 'Berry Boost', description: 'Karışık orman meyveleri, Ejder meyvesi, Muz, Bal, Tercihe göre süt · 330 kcal', price: 550, category: 'Smoothie', emoji: '🫐', available: true, featured: true, createdAt: new Date().toISOString() },
     { id: 'm3', name: 'Tropical Escape', description: 'Mango, Ananas, Keten tohumu, Kolajen, Hindistan cevizi suyu · 290 kcal', price: 550, category: 'Smoothie', emoji: '🥭', available: true, featured: false, createdAt: new Date().toISOString() },
     { id: 'm4', name: 'Nutty Fuel', description: 'Muz, Süzme yoğurt, Fıstık ezmesi, Tarçın, Badem sütü · 445 kcal', price: 550, category: 'Smoothie', emoji: '🥜', available: true, featured: false, createdAt: new Date().toISOString() },
@@ -106,12 +126,15 @@ const defaultDB: DB = {
   ],
   orders: [],
   stockItems: [
-    { id: '1', name: 'Kahve Çekirdeği', unit: 'kg', quantity: 5, minQuantity: 2, costPerUnit: 150, lastUpdated: new Date().toISOString() },
-    { id: '2', name: 'Süt', unit: 'litre', quantity: 20, minQuantity: 5, costPerUnit: 20, lastUpdated: new Date().toISOString() },
-    { id: '3', name: 'Şeker', unit: 'kg', quantity: 10, minQuantity: 3, costPerUnit: 25, lastUpdated: new Date().toISOString() },
-    { id: '4', name: 'Un', unit: 'kg', quantity: 8, minQuantity: 3, costPerUnit: 20, lastUpdated: new Date().toISOString() },
-    { id: '5', name: 'Tereyağı', unit: 'kg', quantity: 3, minQuantity: 1, costPerUnit: 180, lastUpdated: new Date().toISOString() },
-    { id: '6', name: 'Limon', unit: 'adet', quantity: 50, minQuantity: 20, costPerUnit: 3, lastUpdated: new Date().toISOString() },
+    // Birimler ml / gr / adet — reçetelerle birebir eşleşsin diye
+    { id: 's1', name: 'Badem Sütü', unit: 'ml', quantity: 5000, minQuantity: 1000, costPerUnit: 0.09, lastUpdated: new Date().toISOString() },
+    { id: 's2', name: 'Granola', unit: 'gr', quantity: 1000, minQuantity: 200, costPerUnit: 0.35, lastUpdated: new Date().toISOString() },
+    { id: 's3', name: 'Muz', unit: 'adet', quantity: 40, minQuantity: 10, costPerUnit: 12, lastUpdated: new Date().toISOString() },
+    { id: 's4', name: 'Fıstık Ezmesi', unit: 'gr', quantity: 2000, minQuantity: 300, costPerUnit: 0.45, lastUpdated: new Date().toISOString() },
+    { id: 's5', name: 'Açaí Tozu', unit: 'gr', quantity: 500, minQuantity: 100, costPerUnit: 3.5, lastUpdated: new Date().toISOString() },
+    { id: 's6', name: 'Yağlı Süt', unit: 'ml', quantity: 10000, minQuantity: 2000, costPerUnit: 0.05, lastUpdated: new Date().toISOString() },
+    { id: 's7', name: 'Kahve Çekirdeği', unit: 'gr', quantity: 5000, minQuantity: 1000, costPerUnit: 0.15, lastUpdated: new Date().toISOString() },
+    { id: 's8', name: 'Matcha Tozu', unit: 'gr', quantity: 500, minQuantity: 100, costPerUnit: 4, lastUpdated: new Date().toISOString() },
   ],
   financeRecords: [
     { id: '1', type: 'income', category: 'Satış', amount: 1250, description: 'Günlük kasa geliri', date: new Date().toISOString().split('T')[0], createdAt: new Date().toISOString() },

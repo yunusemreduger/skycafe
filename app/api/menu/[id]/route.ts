@@ -7,7 +7,16 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
   const body = await req.json();
   const idx = db.menuItems.findIndex(i => i.id === id);
   if (idx === -1) return NextResponse.json({ error: 'Not found' }, { status: 404 });
-  db.menuItems[idx] = { ...db.menuItems[idx], ...body };
+
+  const patch = { ...body };
+  if ('price' in patch) patch.price = Number(patch.price);
+  if (Array.isArray(patch.recipe)) {
+    patch.recipe = patch.recipe
+      .filter((l: { stockItemId?: string; amount?: number }) => l.stockItemId && Number(l.amount) > 0)
+      .map((l: { stockItemId: string; amount: number }) => ({ stockItemId: l.stockItemId, amount: Number(l.amount) }));
+  }
+
+  db.menuItems[idx] = { ...db.menuItems[idx], ...patch };
   await writeDB(db);
   return NextResponse.json(db.menuItems[idx]);
 }

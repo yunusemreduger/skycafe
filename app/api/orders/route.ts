@@ -33,24 +33,14 @@ export async function POST(req: NextRequest) {
     paymentMethod: body.paymentMethod || 'cash',
     paymentStatus: 'unpaid',
     note: body.note,
+    stockDeducted: false,
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   };
 
   db.orders.push(order);
 
-  // Stok bağlantısı olan ürünleri stoktan düş
-  for (const item of order.items) {
-    const menuItem = db.menuItems.find(m => m.id === item.menuItemId);
-    if (menuItem?.stockItemId) {
-      const stockIdx = db.stockItems.findIndex(s => s.id === menuItem.stockItemId);
-      if (stockIdx !== -1) {
-        const deduct = (menuItem.stockDeductAmount ?? 1) * item.quantity;
-        db.stockItems[stockIdx].quantity = Math.max(0, db.stockItems[stockIdx].quantity - deduct);
-        db.stockItems[stockIdx].lastUpdated = new Date().toISOString();
-      }
-    }
-  }
+  // Not: Stok düşümü sipariş "Tamamlandı" olduğunda yapılır (bkz. /api/orders/[id])
 
   await writeDB(db);
   return NextResponse.json(order, { status: 201 });
