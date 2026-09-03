@@ -22,19 +22,29 @@ interface RecentOrder {
 
 export default function Dashboard() {
   const [stats, setStats] = useState<Stats>({ todayRevenue: 0, todayOrders: 0, pendingOrders: 0, preparingOrders: 0, lowStock: 0, todayExpenses: 0 });
+  const [openDebts, setOpenDebts] = useState(0);
   const [recentOrders, setRecentOrders] = useState<RecentOrder[]>([]);
   const [loading, setLoading] = useState(true);
+  const [role, setRole] = useState<'admin' | 'staff' | null>(null);
 
-  const fetchData = async () => {
+  const isStaff = role === 'staff';
+
+  const fetchData = async (currentRole: 'admin' | 'staff' | null) => {
     try {
-      const [ordersRes, stockRes, financeRes] = await Promise.all([
+      const staff = currentRole === 'staff';
+
+      // Personel finans ve stok uçlarına erişemez — onları hiç çağırma
+      const [ordersRes, debtsRes, stockRes, financeRes] = await Promise.all([
         fetch('/api/orders'),
-        fetch('/api/stock'),
-        fetch('/api/finance'),
+        fetch('/api/debts'),
+        staff ? Promise.resolve(null) : fetch('/api/stock'),
+        staff ? Promise.resolve(null) : fetch('/api/finance'),
       ]);
+
       const orders = await ordersRes.json();
-      const stock = await stockRes.json();
-      const finance = await financeRes.json();
+      const debts = await debtsRes.json();
+      const stock = stockRes ? await stockRes.json() : [];
+      const finance = financeRes ? await financeRes.json() : [];
 
       const today = new Date().toISOString().split('T')[0];
       const todayOrders = orders.filter((o: RecentOrder) => o.createdAt.startsWith(today));
@@ -49,14 +59,23 @@ export default function Dashboard() {
         todayExpenses: todayFinance.filter((f: { type: string; amount: number }) => f.type === 'expense').reduce((s: number, f: { amount: number }) => s + f.amount, 0),
       });
 
+      setOpenDebts(debts.filter((d: { status: string }) => d.status === 'unpaid').length);
       setRecentOrders(orders.slice(0, 8));
       setLoading(false);
     } catch { setLoading(false); }
   };
 
   useEffect(() => {
-    fetchData();
-    const iv = setInterval(fetchData, 5000);
+    let iv: ReturnType<typeof setInterval>;
+    fetch('/api/auth/me')
+      .then(r => r.ok ? r.json() : null)
+      .then(d => {
+        const r = d?.role ?? null;
+        setRole(r);
+        fetchData(r);
+        iv = setInterval(() => fetchData(r), 5000);
+      })
+      .catch(() => setLoading(false));
     return () => clearInterval(iv);
   }, []);
 
@@ -69,12 +88,21 @@ export default function Dashboard() {
     return d.toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
   };
 
-  const statCards = [
+  const adminCards = [
     { label: "Bugünkü Gelir", value: `₺${stats.todayRevenue.toLocaleString('tr-TR')}`, icon: '💰', color: '#22c55e', sub: `Gider: ₺${stats.todayExpenses.toLocaleString('tr-TR')}`, href: '/admin/finance' },
     { label: "Bugünkü Siparişler", value: stats.todayOrders, icon: '📊', color: '#3b82f6', sub: 'Toplam sipariş', href: '/admin/orders' },
     { label: "Bekleyen Siparişler", value: stats.pendingOrders, icon: '🛎', color: '#f59e0b', sub: `Hazırlanıyor: ${stats.preparingOrders}`, href: '/admin/orders' },
     { label: "Düşük Stok", value: stats.lowStock, icon: '⚠️', color: stats.lowStock > 0 ? '#ef4444' : '#22c55e', sub: stats.lowStock > 0 ? 'Stok uyarısı!' : 'Stok yeterli', href: '/admin/stock' },
   ];
+
+  // Personel kartları — ciro / gider / maliyet yok
+  const staffCards = [
+    { label: "Bekleyen Siparişler", value: stats.pendingOrders, icon: '🛎', color: '#f59e0b', sub: `Hazırlanıyor: ${stats.preparingOrders}`, href: '/admin/orders' },
+    { label: "Bugünkü Siparişler", value: stats.todayOrders, icon: '📊', color: '#3b82f6', sub: 'Toplam sipariş', href: '/admin/orders' },
+    { label: "Açık Borçlar", value: openDebts, icon: '📒', color: openDebts > 0 ? '#f59e0b' : '#22c55e', sub: openDebts > 0 ? 'Tahsil edilmedi' : 'Açık borç yok', href: '/admin/debts' },
+  ];
+
+  const statCards = isStaff ? staffCards : adminCards;
 
   if (loading) return (
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '60vh' }}>

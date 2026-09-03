@@ -23,7 +23,8 @@ export default function LoginPage() {
     });
 
     if (res.ok) {
-      router.push('/admin');
+      const data = await res.json();
+      router.push(data.redirect || '/admin');
       router.refresh();
     } else {
       const data = await res.json();

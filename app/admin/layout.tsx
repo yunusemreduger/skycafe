@@ -3,14 +3,16 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 
-const navItems = [
-  { href: '/admin', label: 'Dashboard', icon: '⬡' },
-  { href: '/admin/orders', label: 'Siparişler', icon: '🛎' },
-  { href: '/admin/menu', label: 'Menü', icon: '📋' },
-  { href: '/admin/stock', label: 'Stok', icon: '📦' },
-  { href: '/admin/finance', label: 'Finans', icon: '💰' },
-  { href: '/admin/debts', label: 'Borç Defteri', icon: '📒' },
-  { href: '/admin/qr', label: 'QR Kodlar', icon: '⬛' },
+type Role = 'admin' | 'staff';
+
+const navItems: { href: string; label: string; icon: string; roles: Role[] }[] = [
+  { href: '/admin',         label: 'Dashboard',    icon: '⬡',  roles: ['admin', 'staff'] },
+  { href: '/admin/orders',  label: 'Siparişler',   icon: '🛎', roles: ['admin', 'staff'] },
+  { href: '/admin/debts',   label: 'Borç Defteri', icon: '📒', roles: ['admin', 'staff'] },
+  { href: '/admin/menu',    label: 'Menü',         icon: '📋', roles: ['admin'] },
+  { href: '/admin/stock',   label: 'Stok',         icon: '📦', roles: ['admin'] },
+  { href: '/admin/finance', label: 'Finans',       icon: '💰', roles: ['admin'] },
+  { href: '/admin/qr',      label: 'QR Kodlar',    icon: '⬛', roles: ['admin'] },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -19,10 +21,19 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [shopOpen, setShopOpen] = useState<boolean | null>(null);
   const [toggling, setToggling] = useState(false);
+  const [role, setRole] = useState<Role | null>(null);
+  const [username, setUsername] = useState('');
 
   useEffect(() => {
-    fetch('/api/shop-status').then(r => r.json()).then(d => setShopOpen(d.shopOpen));
+    fetch('/api/shop-status').then(r => r.json()).then(d => setShopOpen(d.shopOpen)).catch(() => {});
+    fetch('/api/auth/me')
+      .then(r => r.ok ? r.json() : null)
+      .then(d => { if (d?.role) { setRole(d.role); setUsername(d.username); } })
+      .catch(() => {});
   }, []);
+
+  const visibleNav = navItems.filter(i => !role || i.roles.includes(role));
+  const isStaff = role === 'staff';
 
   const toggleShop = async () => {
     if (toggling || shopOpen === null) return;
@@ -99,7 +110,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
         {/* Nav */}
         <nav style={{ padding: '12px 12px', flex: 1 }}>
-          {navItems.map(item => {
+          {visibleNav.map(item => {
             const active = pathname === item.href;
             return (
               <Link
@@ -142,7 +153,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {/* Footer */}
         <div style={{ padding: '16px 20px', borderTop: '1px solid rgba(255,255,255,0.05)', display: 'flex', flexDirection: 'column', gap: '12px' }}>
 
-          {/* Dükkan aç/kapat */}
+          {/* Dükkan aç/kapat — sadece admin */}
+          {!isStaff && (
           <button
             onClick={toggleShop}
             disabled={toggling || shopOpen === null}
@@ -182,6 +194,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               }} />
             </div>
           </button>
+          )}
 
           {/* Çıkış */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -226,12 +239,15 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           >☰</button>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginLeft: 'auto' }}>
             <div style={{
-              background: 'rgba(245,158,11,0.1)',
-              border: '1px solid rgba(245,158,11,0.2)',
+              background: isStaff ? 'rgba(59,130,246,0.1)' : 'rgba(245,158,11,0.1)',
+              border: `1px solid ${isStaff ? 'rgba(59,130,246,0.25)' : 'rgba(245,158,11,0.2)'}`,
               borderRadius: '8px', padding: '6px 14px',
-              fontSize: '13px', color: '#f59e0b', fontWeight: 500
+              fontSize: '13px', color: isStaff ? '#60a5fa' : '#f59e0b', fontWeight: 500
             }}>
-              👤 Admin
+              {isStaff ? '👥' : '👤'} {username || (isStaff ? 'Personel' : 'Admin')}
+              <span style={{ opacity: 0.6, marginLeft: '6px', fontSize: '11px' }}>
+                {isStaff ? 'Personel' : 'Yönetici'}
+              </span>
             </div>
           </div>
         </div>
