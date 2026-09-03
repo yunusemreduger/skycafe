@@ -5,17 +5,13 @@ export async function GET() {
   const db = await readDB();
   const manualOpen = db.shopOpen ?? true;
 
-  // Saat kontrolü: 10:00 - 20:00 arası açık (Türkiye saati UTC+3)
-  const now = new Date();
-  const hour = (now.getUTCHours() + 3) % 24;
-  const withinHours = hour >= 10 && hour < 20;
-
+  // Saat kısıtı yok — dükkanı sadece admin panelindeki AÇIK/KAPALI düğmesi belirler
   return NextResponse.json({
-    shopOpen: manualOpen && withinHours,
+    shopOpen: manualOpen,
     manualOpen,
-    withinHours,
-    openTime: '10:00',
-    closeTime: '20:00',
+    withinHours: true,
+    openTime: null,
+    closeTime: null,
   });
 }
 
