@@ -94,25 +94,135 @@ export interface DB {
   shopOpen: boolean;
 }
 
+/**
+ * Stok kalemleri — SKY Protein Bar reçete kartındaki malzemeler.
+ * Birimler ml / gr / adet; reçetelerdeki miktarlarla birebir eşleşir.
+ * quantity başlangıç değerleridir, admin panelinden güncellenir.
+ */
+const now = () => new Date().toISOString();
+
+export const STOCK_SEED: StockItem[] = [
+  // Sıvılar (ml)
+  { id: 'st_badem_sutu',   name: 'Badem Sütü',              unit: 'ml', quantity: 5000,  minQuantity: 1000, costPerUnit: 0.09, lastUpdated: now() },
+  { id: 'st_normal_sut',   name: 'Normal Süt',              unit: 'ml', quantity: 10000, minQuantity: 2000, costPerUnit: 0.05, lastUpdated: now() },
+  { id: 'st_hindistan',    name: 'Hindistan Cevizi Suyu',   unit: 'ml', quantity: 5000,  minQuantity: 1000, costPerUnit: 0.12, lastUpdated: now() },
+
+  // Dondurulmuş meyveler (gr)
+  { id: 'st_don_muz',      name: 'Dondurulmuş Muz',         unit: 'gr', quantity: 5000, minQuantity: 1000, costPerUnit: 0.08, lastUpdated: now() },
+  { id: 'st_don_orman',    name: 'Dondurulmuş Orman Meyvesi', unit: 'gr', quantity: 3000, minQuantity: 600, costPerUnit: 0.25, lastUpdated: now() },
+  { id: 'st_don_ejder',    name: 'Dondurulmuş Ejder Meyvesi', unit: 'gr', quantity: 2000, minQuantity: 400, costPerUnit: 0.4,  lastUpdated: now() },
+  { id: 'st_don_mango',    name: 'Dondurulmuş Mango',       unit: 'gr', quantity: 3000, minQuantity: 600, costPerUnit: 0.18, lastUpdated: now() },
+  { id: 'st_don_ananas',   name: 'Dondurulmuş Ananas',      unit: 'gr', quantity: 3000, minQuantity: 600, costPerUnit: 0.16, lastUpdated: now() },
+  { id: 'st_don_cilek',    name: 'Dondurulmuş Çilek',       unit: 'gr', quantity: 3000, minQuantity: 600, costPerUnit: 0.2,  lastUpdated: now() },
+
+  // Ezmeler, tozlar, tatlandırıcılar (gr)
+  { id: 'st_fistik_ezme',  name: 'Fıstık Ezmesi',           unit: 'gr', quantity: 2000, minQuantity: 400, costPerUnit: 0.45, lastUpdated: now() },
+  { id: 'st_badem_ezme',   name: 'Badem Ezmesi',            unit: 'gr', quantity: 1500, minQuantity: 300, costPerUnit: 0.6,  lastUpdated: now() },
+  { id: 'st_acai',         name: 'Açaí Tozu',               unit: 'gr', quantity: 500,  minQuantity: 100, costPerUnit: 3.5,  lastUpdated: now() },
+  { id: 'st_kolajen',      name: 'Kolajen',                 unit: 'gr', quantity: 500,  minQuantity: 100, costPerUnit: 4,    lastUpdated: now() },
+  { id: 'st_granola',      name: 'Granola',                 unit: 'gr', quantity: 1000, minQuantity: 200, costPerUnit: 0.35, lastUpdated: now() },
+  { id: 'st_keten',        name: 'Keten Tohumu',            unit: 'gr', quantity: 500,  minQuantity: 100, costPerUnit: 0.3,  lastUpdated: now() },
+  { id: 'st_bal',          name: 'Bal',                     unit: 'gr', quantity: 1000, minQuantity: 200, costPerUnit: 0.5,  lastUpdated: now() },
+  { id: 'st_tarcin',       name: 'Tarçın',                  unit: 'gr', quantity: 200,  minQuantity: 50,  costPerUnit: 1.2,  lastUpdated: now() },
+  { id: 'st_zerdecal',     name: 'Zerdeçal',                unit: 'gr', quantity: 200,  minQuantity: 50,  costPerUnit: 1.5,  lastUpdated: now() },
+  { id: 'st_hurma',        name: 'Çekirdeksiz Hurma',       unit: 'gr', quantity: 1500, minQuantity: 300, costPerUnit: 0.55, lastUpdated: now() },
+
+  // Taze ürünler (gr)
+  { id: 'st_yogurt',       name: 'Süzme Yoğurt',            unit: 'gr', quantity: 2000, minQuantity: 500, costPerUnit: 0.22, lastUpdated: now() },
+  { id: 'st_ispanak',      name: 'Ispanak',                 unit: 'gr', quantity: 1000, minQuantity: 200, costPerUnit: 0.15, lastUpdated: now() },
+  { id: 'st_kale',         name: 'Kale',                    unit: 'gr', quantity: 800,  minQuantity: 150, costPerUnit: 0.35, lastUpdated: now() },
+  { id: 'st_zencefil',     name: 'Taze Zencefil',           unit: 'gr', quantity: 300,  minQuantity: 80,  costPerUnit: 0.4,  lastUpdated: now() },
+
+  // Kahve / matcha — reçeteleri henüz tanımlı değil
+  { id: 'st_kahve',        name: 'Kahve Çekirdeği',         unit: 'gr', quantity: 5000, minQuantity: 1000, costPerUnit: 0.15, lastUpdated: now() },
+  { id: 'st_matcha',       name: 'Matcha Tozu',             unit: 'gr', quantity: 500,  minQuantity: 100,  costPerUnit: 4,    lastUpdated: now() },
+];
+
+/**
+ * Ürün adı -> reçete eşlemesi (SKY Protein Bar 550 ml personel reçete kartı).
+ * Hem defaultDB hem de /api/admin/seed-recipes bu tek kaynağı kullanır.
+ */
+export const RECIPE_SEED: Record<string, RecipeLine[]> = {
+  'Power PB': [
+    { stockItemId: 'st_badem_sutu',  amount: 180 },
+    { stockItemId: 'st_don_muz',     amount: 160 },
+    { stockItemId: 'st_acai',        amount: 10 },
+    { stockItemId: 'st_fistik_ezme', amount: 30 },
+    { stockItemId: 'st_granola',     amount: 25 },
+  ],
+  'Berry Boost': [
+    { stockItemId: 'st_normal_sut', amount: 170 },
+    { stockItemId: 'st_don_orman',  amount: 160 },
+    { stockItemId: 'st_don_ejder',  amount: 80 },
+    { stockItemId: 'st_don_muz',    amount: 100 },
+    { stockItemId: 'st_bal',        amount: 10 },
+  ],
+  'Tropical Escape': [
+    { stockItemId: 'st_hindistan',  amount: 160 },
+    { stockItemId: 'st_don_mango',  amount: 160 },
+    { stockItemId: 'st_don_ananas', amount: 150 },
+    { stockItemId: 'st_keten',      amount: 8 },
+    { stockItemId: 'st_kolajen',    amount: 10 },
+  ],
+  'Nutty Fuel': [
+    { stockItemId: 'st_badem_sutu',  amount: 150 },
+    { stockItemId: 'st_don_muz',     amount: 180 },
+    { stockItemId: 'st_yogurt',      amount: 80 },
+    { stockItemId: 'st_fistik_ezme', amount: 30 },
+    { stockItemId: 'st_tarcin',      amount: 2 },
+  ],
+  'Berry Bliss': [
+    { stockItemId: 'st_normal_sut', amount: 150 },
+    { stockItemId: 'st_don_cilek',  amount: 180 },
+    { stockItemId: 'st_don_muz',    amount: 120 },
+    { stockItemId: 'st_yogurt',     amount: 80 },
+    { stockItemId: 'st_bal',        amount: 10 },
+  ],
+  'Green Gold': [
+    { stockItemId: 'st_hindistan', amount: 160 },
+    { stockItemId: 'st_don_mango', amount: 180 },
+    { stockItemId: 'st_ispanak',   amount: 35 },
+    { stockItemId: 'st_kale',      amount: 25 },
+    { stockItemId: 'st_zencefil',  amount: 5 },
+  ],
+  'Golden Boost': [
+    { stockItemId: 'st_hindistan',  amount: 150 },
+    { stockItemId: 'st_don_muz',    amount: 100 },
+    { stockItemId: 'st_don_mango',  amount: 120 },
+    { stockItemId: 'st_don_ananas', amount: 120 },
+    { stockItemId: 'st_zencefil',   amount: 5 },
+    { stockItemId: 'st_zerdecal',   amount: 2 },
+    { stockItemId: 'st_bal',        amount: 10 },
+  ],
+  'Date Power': [
+    { stockItemId: 'st_normal_sut', amount: 160 },
+    { stockItemId: 'st_don_muz',    amount: 180 },
+    { stockItemId: 'st_hurma',      amount: 45 },
+    { stockItemId: 'st_badem_ezme', amount: 30 },
+    { stockItemId: 'st_tarcin',     amount: 2 },
+  ],
+};
+
 const defaultDB: DB = {
   shopOpen: true,
   menuItems: [
     // Smoothie
-    { id: 'm1', name: 'Power PB', description: 'Muz, Açaí tozu, Fıstık ezmesi, Granola, Badem sütü · 510 kcal', price: 550, category: 'Smoothie', emoji: '🥤', available: true, featured: true, createdAt: new Date().toISOString(),
-      recipe: [
-        { stockItemId: 's3', amount: 1 },    // Muz — 1 adet
-        { stockItemId: 's5', amount: 5 },    // Açaí tozu — 5 gr
-        { stockItemId: 's4', amount: 20 },   // Fıstık ezmesi — 20 gr
-        { stockItemId: 's2', amount: 25 },   // Granola — 25 gr
-        { stockItemId: 's1', amount: 130 },  // Badem sütü — 130 ml
-      ] },
-    { id: 'm2', name: 'Berry Boost', description: 'Karışık orman meyveleri, Ejder meyvesi, Muz, Bal, Tercihe göre süt · 330 kcal', price: 550, category: 'Smoothie', emoji: '🫐', available: true, featured: true, createdAt: new Date().toISOString() },
-    { id: 'm3', name: 'Tropical Escape', description: 'Mango, Ananas, Keten tohumu, Kolajen, Hindistan cevizi suyu · 290 kcal', price: 550, category: 'Smoothie', emoji: '🥭', available: true, featured: false, createdAt: new Date().toISOString() },
-    { id: 'm4', name: 'Nutty Fuel', description: 'Muz, Süzme yoğurt, Fıstık ezmesi, Tarçın, Badem sütü · 445 kcal', price: 550, category: 'Smoothie', emoji: '🥜', available: true, featured: false, createdAt: new Date().toISOString() },
-    { id: 'm5', name: 'Berry Bliss', description: 'Çilek, Muz, Süzme yoğurt, Bal, Yağlı süt · 365 kcal', price: 550, category: 'Smoothie', emoji: '🍓', available: true, featured: false, createdAt: new Date().toISOString() },
-    { id: 'm6', name: 'Green Gold', description: 'Kale, Ispanak, Mango, Zencefil, Hindistan cevizi suyu · 165 kcal', price: 550, category: 'Smoothie', emoji: '🥬', available: true, featured: false, createdAt: new Date().toISOString() },
-    { id: 'm7', name: 'Golden Boost', description: 'Zencefil, Zerdeçal, Muz, Mango, Ananas, Bal, Hindistan cevizi suyu · 290 kcal', price: 550, category: 'Smoothie', emoji: '✨', available: true, featured: false, createdAt: new Date().toISOString() },
-    { id: 'm8', name: 'Date Power', description: 'Hurma, Muz, Badem ezmesi, Kakao nibs, Tarçın, Yağlı süt · 575 kcal', price: 550, category: 'Smoothie', emoji: '🌴', available: true, featured: false, createdAt: new Date().toISOString() },
+    { id: 'm1', name: 'Power PB', description: 'Muz, Açaí tozu, Fıstık ezmesi, Granola, Badem sütü · 510 kcal', price: 550, category: 'Smoothie', emoji: '🥤', available: true, featured: true, createdAt: now(),
+      recipe: RECIPE_SEED['Power PB'] },
+    { id: 'm2', name: 'Berry Boost', description: 'Karışık orman meyveleri, Ejder meyvesi, Muz, Bal, Tercihe göre süt · 330 kcal', price: 550, category: 'Smoothie', emoji: '🫐', available: true, featured: true, createdAt: now(),
+      recipe: RECIPE_SEED['Berry Boost'] },
+    { id: 'm3', name: 'Tropical Escape', description: 'Mango, Ananas, Keten tohumu, Kolajen, Hindistan cevizi suyu · 290 kcal', price: 550, category: 'Smoothie', emoji: '🥭', available: true, featured: false, createdAt: now(),
+      recipe: RECIPE_SEED['Tropical Escape'] },
+    { id: 'm4', name: 'Nutty Fuel', description: 'Muz, Süzme yoğurt, Fıstık ezmesi, Tarçın, Badem sütü · 445 kcal', price: 550, category: 'Smoothie', emoji: '🥜', available: true, featured: false, createdAt: now(),
+      recipe: RECIPE_SEED['Nutty Fuel'] },
+    { id: 'm5', name: 'Berry Bliss', description: 'Çilek, Muz, Süzme yoğurt, Bal, Normal süt · 365 kcal', price: 550, category: 'Smoothie', emoji: '🍓', available: true, featured: false, createdAt: now(),
+      recipe: RECIPE_SEED['Berry Bliss'] },
+    { id: 'm6', name: 'Green Gold', description: 'Kale, Ispanak, Mango, Zencefil, Hindistan cevizi suyu · 165 kcal', price: 550, category: 'Smoothie', emoji: '🥬', available: true, featured: false, createdAt: now(),
+      recipe: RECIPE_SEED['Green Gold'] },
+    { id: 'm7', name: 'Golden Boost', description: 'Zencefil, Zerdeçal, Muz, Mango, Ananas, Bal, Hindistan cevizi suyu · 290 kcal', price: 550, category: 'Smoothie', emoji: '✨', available: true, featured: false, createdAt: now(),
+      recipe: RECIPE_SEED['Golden Boost'] },
+    { id: 'm8', name: 'Date Power', description: 'Hurma, Muz, Badem ezmesi, Tarçın, Normal süt · 575 kcal', price: 550, category: 'Smoothie', emoji: '🌴', available: true, featured: false, createdAt: now(),
+      recipe: RECIPE_SEED['Date Power'] },
     // Kahve
     { id: 'm9', name: 'Espresso', description: 'Saf espresso', price: 140, category: 'Kahve', emoji: '☕', available: true, featured: false, createdAt: new Date().toISOString() },
     { id: 'm10', name: 'Americano', description: 'Espresso + sıcak su', price: 180, category: 'Kahve', emoji: '☕', available: true, featured: false, createdAt: new Date().toISOString() },
@@ -125,17 +235,7 @@ const defaultDB: DB = {
     { id: 'm16', name: 'Ice Matcha Latte', description: 'Soğuk matcha latte, buzlu servis', price: 230, category: 'Matcha', emoji: '🍵', available: true, featured: false, createdAt: new Date().toISOString() },
   ],
   orders: [],
-  stockItems: [
-    // Birimler ml / gr / adet — reçetelerle birebir eşleşsin diye
-    { id: 's1', name: 'Badem Sütü', unit: 'ml', quantity: 5000, minQuantity: 1000, costPerUnit: 0.09, lastUpdated: new Date().toISOString() },
-    { id: 's2', name: 'Granola', unit: 'gr', quantity: 1000, minQuantity: 200, costPerUnit: 0.35, lastUpdated: new Date().toISOString() },
-    { id: 's3', name: 'Muz', unit: 'adet', quantity: 40, minQuantity: 10, costPerUnit: 12, lastUpdated: new Date().toISOString() },
-    { id: 's4', name: 'Fıstık Ezmesi', unit: 'gr', quantity: 2000, minQuantity: 300, costPerUnit: 0.45, lastUpdated: new Date().toISOString() },
-    { id: 's5', name: 'Açaí Tozu', unit: 'gr', quantity: 500, minQuantity: 100, costPerUnit: 3.5, lastUpdated: new Date().toISOString() },
-    { id: 's6', name: 'Yağlı Süt', unit: 'ml', quantity: 10000, minQuantity: 2000, costPerUnit: 0.05, lastUpdated: new Date().toISOString() },
-    { id: 's7', name: 'Kahve Çekirdeği', unit: 'gr', quantity: 5000, minQuantity: 1000, costPerUnit: 0.15, lastUpdated: new Date().toISOString() },
-    { id: 's8', name: 'Matcha Tozu', unit: 'gr', quantity: 500, minQuantity: 100, costPerUnit: 4, lastUpdated: new Date().toISOString() },
-  ],
+  stockItems: STOCK_SEED,
   financeRecords: [
     { id: '1', type: 'income', category: 'Satış', amount: 1250, description: 'Günlük kasa geliri', date: new Date().toISOString().split('T')[0], createdAt: new Date().toISOString() },
     { id: '2', type: 'expense', category: 'Malzeme', amount: 320, description: 'Kahve ve süt alımı', date: new Date().toISOString().split('T')[0], createdAt: new Date().toISOString() },
