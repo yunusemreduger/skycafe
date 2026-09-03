@@ -1,9 +1,7 @@
 'use client';
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 
 export default function LoginPage() {
-  const router = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -16,19 +14,25 @@ export default function LoginPage() {
     setLoading(true);
     setError('');
 
-    const res = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, password }),
-    });
+    try {
+      const res = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      });
+      const data = await res.json();
 
-    if (res.ok) {
-      const data = await res.json();
-      router.push(data.redirect || '/admin');
-      router.refresh();
-    } else {
-      const data = await res.json();
+      if (res.ok) {
+        // Tam sayfa yüklemesi: yeni oturum çerezi middleware'e ilk istekte ulaşır.
+        // router.push ile client-side gidilirse middleware çerezi henüz göremiyor
+        // ve kullanıcı giriş ekranında kalıyordu.
+        window.location.assign(data.redirect || '/admin');
+        return; // yönlendirme sürerken butonu "Giriş yapılıyor" konumunda bırak
+      }
+
       setError(data.error || 'Giriş başarısız');
+    } catch {
+      setError('Bağlantı hatası, tekrar deneyin');
     }
     setLoading(false);
   };
