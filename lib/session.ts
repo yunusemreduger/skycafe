@@ -27,7 +27,7 @@ export function roleFromToken(token: string | undefined | null): Role | null {
  * /admin/finance gibi tüm alt sayfalar açılır.
  */
 const STAFF_EXACT_PAGES = ['/admin'];
-const STAFF_PAGE_PREFIXES = ['/admin/orders', '/admin/debts'];
+const STAFF_PAGE_PREFIXES = ['/admin/orders', '/admin/debts', '/admin/kasa'];
 
 export function canAccessPage(role: Role, pathname: string): boolean {
   if (role === 'admin') return true;
@@ -44,9 +44,10 @@ export function canAccessApi(role: Role, pathname: string, method: string): bool
 
   const read = method === 'GET';
 
-  // Siparişler ve borç defteri — personel tam yetkili
+  // Siparişler, borç defteri ve kasa (masa adisyonları) — personel tam yetkili
   if (pathname.startsWith('/api/orders')) return true;
   if (pathname.startsWith('/api/debts')) return true;
+  if (pathname.startsWith('/api/tabs')) return true;
 
   // Menü ve dükkan durumu — personel sadece okuyabilir
   if (pathname.startsWith('/api/menu')) return read;

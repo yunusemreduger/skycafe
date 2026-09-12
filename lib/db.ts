@@ -53,6 +53,28 @@ export interface Order {
   updatedAt: string;
 }
 
+/** Kafedeki fiziksel masa sayısı */
+export const TABLE_COUNT = 4;
+export const TABLE_NUMBERS = Array.from({ length: TABLE_COUNT }, (_, i) => i + 1);
+
+/**
+ * Masa adisyonu — kasadaki eleman masaya ürün ekler, hesap kapanınca
+ * sipariş kaydına dönüşür (stok düşer, gelir/borç yazılır).
+ */
+export interface Tab {
+  id: string;
+  /** 1..TABLE_COUNT */
+  tableNumber: number;
+  items: OrderItem[];
+  status: 'open' | 'closed';
+  openedAt: string;
+  updatedAt: string;
+  closedAt?: string;
+  /** Kapanışta oluşan sipariş kaydının id'si */
+  orderId?: string;
+  note?: string;
+}
+
 export interface StockItem {
   id: string;
   name: string;
@@ -91,6 +113,8 @@ export interface DB {
   stockItems: StockItem[];
   financeRecords: FinanceRecord[];
   debts: DebtRecord[];
+  /** Masa adisyonları (kasa ekranı) */
+  tabs: Tab[];
   shopOpen: boolean;
 }
 
@@ -241,6 +265,7 @@ const defaultDB: DB = {
     { id: '2', type: 'expense', category: 'Malzeme', amount: 320, description: 'Kahve ve süt alımı', date: new Date().toISOString().split('T')[0], createdAt: new Date().toISOString() },
   ],
   debts: [],
+  tabs: [],
 };
 
 // ---------------------------------------------------------------------------
@@ -288,6 +313,7 @@ function normalize(db: Partial<DB>): DB {
     stockItems: db.stockItems ?? defaultDB.stockItems,
     financeRecords: db.financeRecords ?? [],
     debts: db.debts ?? [],
+    tabs: db.tabs ?? [],
     shopOpen: db.shopOpen ?? true,
   };
 }

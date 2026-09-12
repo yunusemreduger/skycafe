@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { readDB, writeDB, generateId } from '@/lib/db';
+import { deductStockForItems } from '@/lib/stock';
 
 export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -11,38 +12,12 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: 
   const prev = db.orders[idx];
   db.orders[idx] = { ...prev, ...body, updatedAt: new Date().toISOString() };
 
-  const stockWarnings: string[] = [];
+  let stockWarnings: string[] = [];
 
   // ---- Sipariş "Tamamlandı" olduğunda reçetelere göre stok düş ----
   const justCompleted = body.status === 'completed' && prev.status !== 'completed';
   if (justCompleted && !prev.stockDeducted) {
-    const order = db.orders[idx];
-
-    for (const item of order.items) {
-      const menuItem = db.menuItems.find(m => m.id === item.menuItemId);
-      if (!menuItem) continue;
-
-      // Yeni reçete formatı; yoksa eski tekli stok bağlantısına düş
-      const recipe = menuItem.recipe?.length
-        ? menuItem.recipe
-        : menuItem.stockItemId
-          ? [{ stockItemId: menuItem.stockItemId, amount: menuItem.stockDeductAmount ?? 1 }]
-          : [];
-
-      for (const line of recipe) {
-        const sIdx = db.stockItems.findIndex(s => s.id === line.stockItemId);
-        if (sIdx === -1) continue;
-
-        const stok = db.stockItems[sIdx];
-        const gerekli = line.amount * item.quantity;
-        if (stok.quantity < gerekli) {
-          stockWarnings.push(`${stok.name}: ${gerekli} ${stok.unit} gerekiyordu, stokta ${stok.quantity} ${stok.unit} vardı`);
-        }
-        stok.quantity = Math.max(0, stok.quantity - gerekli);
-        stok.lastUpdated = new Date().toISOString();
-      }
-    }
-
+    stockWarnings = deductStockForItems(db, db.orders[idx].items);
     db.orders[idx].stockDeducted = true;
   }
 

@@ -7,6 +7,7 @@ type Role = 'admin' | 'staff';
 
 const navItems: { href: string; label: string; icon: string; roles: Role[] }[] = [
   { href: '/admin',         label: 'Dashboard',    icon: '⬡',  roles: ['admin', 'staff'] },
+  { href: '/admin/kasa',    label: 'Kasa',         icon: '🧾', roles: ['admin', 'staff'] },
   { href: '/admin/orders',  label: 'Siparişler',   icon: '🛎', roles: ['admin', 'staff'] },
   { href: '/admin/debts',   label: 'Borç Defteri', icon: '📒', roles: ['admin', 'staff'] },
   { href: '/admin/menu',    label: 'Menü',         icon: '📋', roles: ['admin'] },
