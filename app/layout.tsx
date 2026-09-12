@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "SkyCafé — Site Kafe Yönetimi",
+  title: "SKY PROTEIN BAR",
   description: "Site kafe yönetim sistemi — menü, sipariş, stok, finans",
 };
 

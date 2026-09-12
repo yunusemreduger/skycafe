@@ -163,7 +163,7 @@ export default function KasaPage() {
     setSelected(null);
   };
 
-  if (loading) return <div style={{ color: '#94a3b8', padding: '40px' }}>Yükleniyor...</div>;
+  if (loading) return <div style={{ color: '#6B6456', padding: '40px' }}>Yükleniyor...</div>;
 
   const btn = (bg: string, border: string, color: string) => ({
     padding: '12px', borderRadius: '10px', background: bg,
@@ -175,7 +175,7 @@ export default function KasaPage() {
     <div className="fade-in">
       <div style={{ marginBottom: '22px' }}>
         <h1 style={{ fontSize: '26px', fontWeight: 700, letterSpacing: '-0.5px', marginBottom: '4px' }}>Kasa</h1>
-        <p style={{ color: '#64748b', fontSize: '14px' }}>Masaya sipariş ekle, hesabı kapat</p>
+        <p style={{ color: '#746C5C', fontSize: '14px' }}>Masaya sipariş ekle, hesabı kapat</p>
       </div>
 
       {/* Masa kartları */}
@@ -189,8 +189,8 @@ export default function KasaPage() {
               onClick={() => setSelected(aktif ? null : t.tableNumber)}
               className="card-hover"
               style={{
-                background: aktif ? 'rgba(245,158,11,0.12)' : '#12121a',
-                border: `1px solid ${aktif ? 'rgba(245,158,11,0.45)' : dolu ? 'rgba(34,197,94,0.25)' : 'rgba(255,255,255,0.06)'}`,
+                background: aktif ? 'rgba(42,112,73,0.12)' : '#FFFFFF',
+                border: `1px solid ${aktif ? 'rgba(42,112,73,0.45)' : dolu ? 'rgba(42,112,73,0.25)' : '#E3DACA'}`,
                 borderRadius: '16px', padding: '20px 18px', cursor: 'pointer',
                 textAlign: 'left', color: 'inherit', transition: 'all 0.15s ease',
               }}
@@ -199,13 +199,13 @@ export default function KasaPage() {
                 <span style={{ fontSize: '17px', fontWeight: 700 }}>Masa {t.tableNumber}</span>
                 <span style={{
                   width: '9px', height: '9px', borderRadius: '50%',
-                  background: dolu ? '#22c55e' : '#374151',
+                  background: dolu ? '#2A7049' : '#C4B69C',
                 }} />
               </div>
-              <div style={{ fontSize: '22px', fontWeight: 700, color: dolu ? '#22c55e' : '#374151' }}>
+              <div style={{ fontSize: '22px', fontWeight: 700, color: dolu ? '#2A7049' : '#C4B69C' }}>
                 {dolu ? TL(t.total) : 'Boş'}
               </div>
-              <div style={{ fontSize: '11px', color: '#475569', marginTop: '3px' }}>
+              <div style={{ fontSize: '11px', color: '#7A7263', marginTop: '3px' }}>
                 {dolu ? `${t.itemCount} ürün · ${sureMetni(t.tab!.openedAt)}` : 'Adisyon yok'}
               </div>
             </button>
@@ -215,8 +215,8 @@ export default function KasaPage() {
 
       {selected === null ? (
         <div style={{
-          background: '#12121a', border: '1px dashed rgba(255,255,255,0.1)',
-          borderRadius: '16px', padding: '40px', textAlign: 'center', color: '#475569', fontSize: '14px',
+          background: '#FFFFFF', border: '1px dashed #D6CBB6',
+          borderRadius: '16px', padding: '40px', textAlign: 'center', color: '#7A7263', fontSize: '14px',
         }}>
           Sipariş eklemek için yukarıdan bir masa seçin
         </div>
@@ -225,8 +225,8 @@ export default function KasaPage() {
              className="kasa-grid">
 
           {/* Ürün seçimi */}
-          <div style={{ background: '#12121a', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '16px', padding: '18px' }}>
-            <div style={{ fontSize: '13px', fontWeight: 700, color: '#94a3b8', marginBottom: '12px' }}>
+          <div style={{ background: '#FFFFFF', border: '1px solid #E3DACA', borderRadius: '16px', padding: '18px' }}>
+            <div style={{ fontSize: '13px', fontWeight: 700, color: '#6B6456', marginBottom: '12px' }}>
               Masa {selected} — ürün ekle
             </div>
 
@@ -234,9 +234,9 @@ export default function KasaPage() {
               {categories.map(c => (
                 <button key={c} onClick={() => setActiveCat(c)} style={{
                   padding: '6px 13px', borderRadius: '8px', fontSize: '12px', fontWeight: 600, cursor: 'pointer',
-                  background: activeCat === c ? 'rgba(245,158,11,0.15)' : '#1a1a26',
-                  border: `1px solid ${activeCat === c ? 'rgba(245,158,11,0.3)' : 'rgba(255,255,255,0.06)'}`,
-                  color: activeCat === c ? '#f59e0b' : '#94a3b8',
+                  background: activeCat === c ? 'rgba(42,112,73,0.15)' : '#FAF7F0',
+                  border: `1px solid ${activeCat === c ? 'rgba(42,112,73,0.3)' : '#E3DACA'}`,
+                  color: activeCat === c ? '#2A7049' : '#6B6456',
                 }}>{c}</button>
               ))}
             </div>
@@ -244,39 +244,39 @@ export default function KasaPage() {
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(135px, 1fr))', gap: '9px' }}>
               {visibleMenu.map(m => (
                 <button key={m.id} onClick={() => addItem(m.id)} disabled={busy} style={{
-                  background: '#1a1a26', border: '1px solid rgba(255,255,255,0.07)',
+                  background: '#FAF7F0', border: '1px solid #E3DACA',
                   borderRadius: '11px', padding: '12px 10px', cursor: busy ? 'wait' : 'pointer',
                   textAlign: 'left', color: 'inherit',
                 }}>
                   <div style={{ fontSize: '17px', marginBottom: '5px' }}>{m.emoji}</div>
                   <div style={{ fontSize: '12px', fontWeight: 600, lineHeight: 1.25, marginBottom: '4px' }}>{m.name}</div>
-                  <div style={{ fontSize: '12px', fontWeight: 700, color: '#22c55e' }}>{TL(m.price)}</div>
+                  <div style={{ fontSize: '12px', fontWeight: 700, color: '#2A7049' }}>{TL(m.price)}</div>
                 </button>
               ))}
             </div>
           </div>
 
           {/* Adisyon */}
-          <div style={{ background: '#12121a', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '16px', padding: '18px', position: 'sticky', top: '12px' }}>
+          <div style={{ background: '#FFFFFF', border: '1px solid #E3DACA', borderRadius: '16px', padding: '18px', position: 'sticky', top: '12px' }}>
             <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '14px' }}>
               <div>
-                <div style={{ fontSize: '13px', fontWeight: 700, color: '#94a3b8' }}>Adisyon</div>
+                <div style={{ fontSize: '13px', fontWeight: 700, color: '#6B6456' }}>Adisyon</div>
                 {current?.tab && (
-                  <div style={{ fontSize: '11px', color: '#475569', marginTop: '2px' }}>
+                  <div style={{ fontSize: '11px', color: '#7A7263', marginTop: '2px' }}>
                     {saat(current.tab.openedAt)}&apos;de açıldı · {sureMetni(current.tab.openedAt)} önce
                   </div>
                 )}
               </div>
               {current?.tab && (
                 <button onClick={cancelTab} style={{
-                  background: 'none', border: 'none', color: '#475569',
+                  background: 'none', border: 'none', color: '#7A7263',
                   fontSize: '11px', cursor: 'pointer', padding: '2px 6px',
                 }}>İptal et</button>
               )}
             </div>
 
             {!current?.tab || current.tab.items.length === 0 ? (
-              <div style={{ color: '#475569', fontSize: '13px', padding: '24px 0', textAlign: 'center' }}>
+              <div style={{ color: '#7A7263', fontSize: '13px', padding: '24px 0', textAlign: 'center' }}>
                 Adisyon boş — soldan ürün ekleyin
               </div>
             ) : (
@@ -285,26 +285,26 @@ export default function KasaPage() {
                   {current.tab.items.map((item, i) => (
                     <div key={i} style={{
                       display: 'flex', alignItems: 'center', gap: '10px',
-                      padding: '9px 0', borderBottom: '1px solid rgba(255,255,255,0.04)',
+                      padding: '9px 0', borderBottom: '1px solid #EFE8DA',
                     }}>
                       <div style={{ flex: 1, minWidth: 0 }}>
                         <div style={{ fontSize: '13px', fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                           {item.name}
                         </div>
-                        <div style={{ fontSize: '11px', color: '#475569' }}>{TL(item.price)} × {item.quantity}</div>
+                        <div style={{ fontSize: '11px', color: '#7A7263' }}>{TL(item.price)} × {item.quantity}</div>
                       </div>
                       <div style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
                         <button onClick={() => setQty(item, item.quantity - 1)} disabled={busy} style={{
-                          width: '25px', height: '25px', borderRadius: '7px', background: '#1a1a26',
-                          border: '1px solid rgba(255,255,255,0.08)', color: '#94a3b8', cursor: 'pointer', fontSize: '15px', lineHeight: 1,
+                          width: '25px', height: '25px', borderRadius: '7px', background: '#FAF7F0',
+                          border: '1px solid #E3DACA', color: '#6B6456', cursor: 'pointer', fontSize: '15px', lineHeight: 1,
                         }}>−</button>
                         <span style={{ minWidth: '18px', textAlign: 'center', fontSize: '13px', fontWeight: 700 }}>{item.quantity}</span>
                         <button onClick={() => setQty(item, item.quantity + 1)} disabled={busy} style={{
-                          width: '25px', height: '25px', borderRadius: '7px', background: '#1a1a26',
-                          border: '1px solid rgba(255,255,255,0.08)', color: '#94a3b8', cursor: 'pointer', fontSize: '15px', lineHeight: 1,
+                          width: '25px', height: '25px', borderRadius: '7px', background: '#FAF7F0',
+                          border: '1px solid #E3DACA', color: '#6B6456', cursor: 'pointer', fontSize: '15px', lineHeight: 1,
                         }}>+</button>
                       </div>
-                      <div style={{ fontSize: '13px', fontWeight: 700, color: '#22c55e', minWidth: '58px', textAlign: 'right' }}>
+                      <div style={{ fontSize: '13px', fontWeight: 700, color: '#2A7049', minWidth: '58px', textAlign: 'right' }}>
                         {TL(item.price * item.quantity)}
                       </div>
                     </div>
@@ -313,23 +313,23 @@ export default function KasaPage() {
 
                 <div style={{
                   display: 'flex', justifyContent: 'space-between', alignItems: 'center',
-                  padding: '13px 0', borderTop: '1px solid rgba(255,255,255,0.08)', marginBottom: '14px',
+                  padding: '13px 0', borderTop: '1px solid #E3DACA', marginBottom: '14px',
                 }}>
                   <span style={{ fontSize: '14px', fontWeight: 700 }}>Toplam</span>
-                  <span style={{ fontSize: '21px', fontWeight: 700, color: '#22c55e' }}>{TL(current.total)}</span>
+                  <span style={{ fontSize: '21px', fontWeight: 700, color: '#2A7049' }}>{TL(current.total)}</span>
                 </div>
 
                 <button onClick={() => setPayModal(true)} disabled={busy} style={{
                   width: '100%', padding: '14px', borderRadius: '12px', marginBottom: '9px',
-                  background: 'linear-gradient(135deg, #f59e0b, #d97706)', border: 'none',
-                  color: '#000', fontSize: '15px', fontWeight: 700, cursor: busy ? 'wait' : 'pointer',
+                  background: 'linear-gradient(135deg, #2A7049, #256844)', border: 'none',
+                  color: '#fff', fontSize: '15px', fontWeight: 700, cursor: busy ? 'wait' : 'pointer',
                 }}>Hesabı Kapat</button>
 
                 <div style={{ display: 'flex', gap: '8px' }}>
                   <button onClick={() => setDebtModal(true)} disabled={busy}
-                    style={btn('rgba(245,158,11,0.08)', 'rgba(245,158,11,0.2)', '#f59e0b')}>📒 Borca Yaz</button>
+                    style={btn('rgba(42,112,73,0.08)', 'rgba(42,112,73,0.2)', '#2A7049')}>📒 Borca Yaz</button>
                   <button onClick={() => setMoveModal(true)} disabled={busy}
-                    style={btn('#1a1a26', 'rgba(255,255,255,0.08)', '#94a3b8')}>↔ Masa Değiştir</button>
+                    style={btn('#FAF7F0', '#E3DACA', '#6B6456')}>↔ Masa Değiştir</button>
                 </div>
               </>
             )}
@@ -340,39 +340,39 @@ export default function KasaPage() {
       {/* Ödeme yöntemi */}
       {payModal && current && (
         <div onClick={() => setPayModal(false)} style={{
-          position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)', display: 'flex',
+          position: 'fixed', inset: 0, background: 'rgba(46,43,36,0.45)', display: 'flex',
           alignItems: 'center', justifyContent: 'center', zIndex: 100, padding: '20px',
         }}>
           <div onClick={e => e.stopPropagation()} style={{
-            background: '#12121a', border: '1px solid rgba(255,255,255,0.08)',
+            background: '#FFFFFF', border: '1px solid #E3DACA',
             borderRadius: '20px', padding: '28px', width: '100%', maxWidth: '380px',
           }}>
             <div style={{ textAlign: 'center', marginBottom: '22px' }}>
-              <div style={{ fontSize: '13px', color: '#64748b', marginBottom: '6px' }}>Masa {selected} — tahsil edilecek</div>
-              <div style={{ fontSize: '34px', fontWeight: 700, color: '#22c55e' }}>{TL(current.total)}</div>
+              <div style={{ fontSize: '13px', color: '#746C5C', marginBottom: '6px' }}>Masa {selected} — tahsil edilecek</div>
+              <div style={{ fontSize: '34px', fontWeight: 700, color: '#2A7049' }}>{TL(current.total)}</div>
             </div>
-            <div style={{ fontSize: '12px', color: '#64748b', marginBottom: '11px', fontWeight: 600 }}>Ödeme yöntemi</div>
+            <div style={{ fontSize: '12px', color: '#746C5C', marginBottom: '11px', fontWeight: 600 }}>Ödeme yöntemi</div>
             <div style={{ display: 'flex', gap: '11px', marginBottom: '14px' }}>
               <button onClick={() => closeTab('cash')} disabled={busy} style={{
                 flex: 1, padding: '22px 14px', borderRadius: '14px',
-                background: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.25)',
-                color: '#4ade80', cursor: busy ? 'wait' : 'pointer',
+                background: 'rgba(42,112,73,0.1)', border: '1px solid rgba(42,112,73,0.25)',
+                color: '#256844', cursor: busy ? 'wait' : 'pointer',
               }}>
                 <div style={{ fontSize: '26px', marginBottom: '7px' }}>💵</div>
                 <div style={{ fontSize: '14px', fontWeight: 700 }}>Nakit</div>
               </button>
               <button onClick={() => closeTab('card')} disabled={busy} style={{
                 flex: 1, padding: '22px 14px', borderRadius: '14px',
-                background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.25)',
-                color: '#60a5fa', cursor: busy ? 'wait' : 'pointer',
+                background: 'rgba(37,99,235,0.1)', border: '1px solid rgba(37,99,235,0.25)',
+                color: '#1D4ED8', cursor: busy ? 'wait' : 'pointer',
               }}>
                 <div style={{ fontSize: '26px', marginBottom: '7px' }}>💳</div>
                 <div style={{ fontSize: '14px', fontWeight: 700 }}>Kredi Kartı</div>
               </button>
             </div>
             <button onClick={() => setPayModal(false)} style={{
-              width: '100%', padding: '11px', borderRadius: '10px', background: '#1a1a26',
-              border: '1px solid rgba(255,255,255,0.08)', color: '#94a3b8', fontSize: '13px', cursor: 'pointer',
+              width: '100%', padding: '11px', borderRadius: '10px', background: '#FAF7F0',
+              border: '1px solid #E3DACA', color: '#6B6456', fontSize: '13px', cursor: 'pointer',
             }}>Vazgeç</button>
           </div>
         </div>
@@ -381,37 +381,37 @@ export default function KasaPage() {
       {/* Borca yaz */}
       {debtModal && current && (
         <div onClick={() => setDebtModal(false)} style={{
-          position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)', display: 'flex',
+          position: 'fixed', inset: 0, background: 'rgba(46,43,36,0.45)', display: 'flex',
           alignItems: 'center', justifyContent: 'center', zIndex: 100, padding: '20px',
         }}>
           <div onClick={e => e.stopPropagation()} style={{
-            background: '#12121a', border: '1px solid rgba(255,255,255,0.08)',
+            background: '#FFFFFF', border: '1px solid #E3DACA',
             borderRadius: '20px', padding: '28px', width: '100%', maxWidth: '380px',
           }}>
             <div style={{ fontSize: '17px', fontWeight: 700, marginBottom: '5px' }}>Borç Defterine Yaz</div>
-            <div style={{ fontSize: '13px', color: '#64748b', marginBottom: '18px' }}>
+            <div style={{ fontSize: '13px', color: '#746C5C', marginBottom: '18px' }}>
               Masa {selected} — {TL(current.total)}
             </div>
-            <label style={{ fontSize: '12px', color: '#64748b', display: 'block', marginBottom: '7px' }}>Kime yazılacak?</label>
+            <label style={{ fontSize: '12px', color: '#746C5C', display: 'block', marginBottom: '7px' }}>Kime yazılacak?</label>
             <input
               autoFocus value={debtName} onChange={e => setDebtName(e.target.value)}
               onKeyDown={e => { if (e.key === 'Enter') toDebt(); }}
               placeholder="İsim / daire no"
               style={{
-                width: '100%', padding: '11px 14px', background: '#1a1a26',
-                border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px',
-                color: '#f8fafc', fontSize: '14px', outline: 'none', marginBottom: '18px',
+                width: '100%', padding: '11px 14px', background: '#FAF7F0',
+                border: '1px solid #D6CBB6', borderRadius: '10px',
+                color: '#2E2B24', fontSize: '14px', outline: 'none', marginBottom: '18px',
               }}
             />
             <div style={{ display: 'flex', gap: '11px' }}>
               <button onClick={() => setDebtModal(false)} style={{
-                flex: 1, padding: '12px', borderRadius: '10px', background: '#1a1a26',
-                border: '1px solid rgba(255,255,255,0.08)', color: '#94a3b8', fontSize: '14px', cursor: 'pointer',
+                flex: 1, padding: '12px', borderRadius: '10px', background: '#FAF7F0',
+                border: '1px solid #E3DACA', color: '#6B6456', fontSize: '14px', cursor: 'pointer',
               }}>İptal</button>
               <button onClick={toDebt} disabled={!debtName.trim() || busy} style={{
                 flex: 1, padding: '12px', borderRadius: '10px',
-                background: debtName.trim() ? 'linear-gradient(135deg, #f59e0b, #d97706)' : '#1a1a26',
-                border: 'none', color: debtName.trim() ? '#000' : '#475569',
+                background: debtName.trim() ? 'linear-gradient(135deg, #2A7049, #256844)' : '#FAF7F0',
+                border: 'none', color: debtName.trim() ? '#000' : '#7A7263',
                 fontSize: '14px', fontWeight: 700, cursor: debtName.trim() ? 'pointer' : 'not-allowed',
               }}>Borca Yaz</button>
             </div>
@@ -422,35 +422,35 @@ export default function KasaPage() {
       {/* Masa değiştir */}
       {moveModal && (
         <div onClick={() => setMoveModal(false)} style={{
-          position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)', display: 'flex',
+          position: 'fixed', inset: 0, background: 'rgba(46,43,36,0.45)', display: 'flex',
           alignItems: 'center', justifyContent: 'center', zIndex: 100, padding: '20px',
         }}>
           <div onClick={e => e.stopPropagation()} style={{
-            background: '#12121a', border: '1px solid rgba(255,255,255,0.08)',
+            background: '#FFFFFF', border: '1px solid #E3DACA',
             borderRadius: '20px', padding: '28px', width: '100%', maxWidth: '380px',
           }}>
             <div style={{ fontSize: '17px', fontWeight: 700, marginBottom: '5px' }}>Masa {selected} adisyonu</div>
-            <div style={{ fontSize: '13px', color: '#64748b', marginBottom: '18px' }}>
+            <div style={{ fontSize: '13px', color: '#746C5C', marginBottom: '18px' }}>
               Boş masaya taşınır, dolu masayla birleştirilir
             </div>
             <div style={{ display: 'grid', gap: '9px', marginBottom: '18px' }}>
               {tables.filter(t => t.tableNumber !== selected).map(t => (
                 <button key={t.tableNumber} onClick={() => moveOrMerge(t.tableNumber)} disabled={busy} style={{
                   display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                  padding: '13px 16px', borderRadius: '11px', background: '#1a1a26',
-                  border: '1px solid rgba(255,255,255,0.08)', color: 'inherit',
+                  padding: '13px 16px', borderRadius: '11px', background: '#FAF7F0',
+                  border: '1px solid #E3DACA', color: 'inherit',
                   cursor: busy ? 'wait' : 'pointer', textAlign: 'left',
                 }}>
                   <span style={{ fontSize: '14px', fontWeight: 600 }}>Masa {t.tableNumber}</span>
-                  <span style={{ fontSize: '12px', color: t.tab ? '#f59e0b' : '#22c55e', fontWeight: 600 }}>
+                  <span style={{ fontSize: '12px', color: t.tab ? '#2A7049' : '#2A7049', fontWeight: 600 }}>
                     {t.tab ? `Birleştir · ${TL(t.total)}` : 'Taşı · Boş'}
                   </span>
                 </button>
               ))}
             </div>
             <button onClick={() => setMoveModal(false)} style={{
-              width: '100%', padding: '11px', borderRadius: '10px', background: '#1a1a26',
-              border: '1px solid rgba(255,255,255,0.08)', color: '#94a3b8', fontSize: '13px', cursor: 'pointer',
+              width: '100%', padding: '11px', borderRadius: '10px', background: '#FAF7F0',
+              border: '1px solid #E3DACA', color: '#6B6456', fontSize: '13px', cursor: 'pointer',
             }}>Vazgeç</button>
           </div>
         </div>
@@ -460,8 +460,8 @@ export default function KasaPage() {
       {toast && (
         <div style={{
           position: 'fixed', bottom: '24px', left: '50%', transform: 'translateX(-50%)',
-          background: 'rgba(34,197,94,0.15)', border: '1px solid rgba(34,197,94,0.3)',
-          color: '#4ade80', padding: '13px 22px', borderRadius: '12px',
+          background: 'rgba(42,112,73,0.15)', border: '1px solid rgba(42,112,73,0.3)',
+          color: '#256844', padding: '13px 22px', borderRadius: '12px',
           fontSize: '14px', fontWeight: 600, zIndex: 200, backdropFilter: 'blur(8px)',
         }}>✓ {toast}</div>
       )}

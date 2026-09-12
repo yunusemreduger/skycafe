@@ -71,41 +71,41 @@ export default function StockPage() {
   };
 
   const levelColors: Record<string, { color: string; bg: string; label: string }> = {
-    empty: { color: '#f87171', bg: 'rgba(239,68,68,0.15)', label: 'Tükendi' },
+    empty: { color: '#A32D22', bg: 'rgba(192,57,43,0.15)', label: 'Tükendi' },
     low: { color: '#fb923c', bg: 'rgba(251,146,60,0.15)', label: 'Kritik' },
-    warning: { color: '#fbbf24', bg: 'rgba(251,191,36,0.15)', label: 'Az' },
-    ok: { color: '#4ade80', bg: 'rgba(34,197,94,0.15)', label: 'Yeterli' },
+    warning: { color: '#2E7D53', bg: 'rgba(42,112,73,0.15)', label: 'Az' },
+    ok: { color: '#256844', bg: 'rgba(42,112,73,0.15)', label: 'Yeterli' },
   };
 
   const lowStockItems = items.filter(i => getStockLevel(i) !== 'ok');
 
-  if (loading) return <div style={{ color: '#94a3b8', padding: '40px' }}>Yükleniyor...</div>;
+  if (loading) return <div style={{ color: '#6B6456', padding: '40px' }}>Yükleniyor...</div>;
 
   return (
     <div className="fade-in">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', flexWrap: 'wrap', gap: '12px' }}>
         <div>
           <h1 style={{ fontSize: '24px', fontWeight: 700, marginBottom: '4px' }}>Stok Takibi</h1>
-          <p style={{ color: '#64748b', fontSize: '13px' }}>{items.length} kalem · {lowStockItems.length} uyarı</p>
+          <p style={{ color: '#746C5C', fontSize: '13px' }}>{items.length} kalem · {lowStockItems.length} uyarı</p>
         </div>
         <button onClick={openCreate} style={{
           padding: '10px 20px', borderRadius: '10px',
-          background: 'linear-gradient(135deg, #f59e0b, #d97706)',
-          border: 'none', color: '#000', fontWeight: 700, fontSize: '14px', cursor: 'pointer'
+          background: 'linear-gradient(135deg, #2A7049, #256844)',
+          border: 'none', color: '#fff', fontWeight: 700, fontSize: '14px', cursor: 'pointer'
         }}>+ Stok Ekle</button>
       </div>
 
       {/* Low stock alert */}
       {lowStockItems.length > 0 && (
         <div style={{
-          background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)',
+          background: 'rgba(192,57,43,0.08)', border: '1px solid rgba(192,57,43,0.2)',
           borderRadius: '12px', padding: '14px 18px', marginBottom: '20px',
           display: 'flex', alignItems: 'center', gap: '12px'
         }}>
           <span style={{ fontSize: '20px' }}>⚠️</span>
           <div>
-            <div style={{ fontSize: '13px', fontWeight: 600, color: '#f87171' }}>Stok Uyarısı</div>
-            <div style={{ fontSize: '12px', color: '#94a3b8', marginTop: '2px' }}>
+            <div style={{ fontSize: '13px', fontWeight: 600, color: '#A32D22' }}>Stok Uyarısı</div>
+            <div style={{ fontSize: '12px', color: '#6B6456', marginTop: '2px' }}>
               {lowStockItems.map(i => i.name).join(', ')} — kritik seviyede
             </div>
           </div>
@@ -121,13 +121,13 @@ export default function StockPage() {
 
           return (
             <div key={item.id} className="card-hover" style={{
-              background: '#12121a', border: '1px solid rgba(255,255,255,0.06)',
+              background: '#FFFFFF', border: '1px solid #E3DACA',
               borderRadius: '14px', padding: '18px',
             }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '12px' }}>
                 <div>
                   <div style={{ fontWeight: 600, fontSize: '15px', marginBottom: '3px' }}>{item.name}</div>
-                  <div style={{ fontSize: '12px', color: '#475569' }}>Min: {item.minQuantity} {item.unit}</div>
+                  <div style={{ fontSize: '12px', color: '#7A7263' }}>Min: {item.minQuantity} {item.unit}</div>
                 </div>
                 <span style={{
                   fontSize: '11px', fontWeight: 600, padding: '3px 8px', borderRadius: '6px',
@@ -136,16 +136,16 @@ export default function StockPage() {
               </div>
 
               <div style={{ fontSize: '28px', fontWeight: 700, color: lc.color, marginBottom: '6px' }}>
-                {item.quantity} <span style={{ fontSize: '14px', color: '#64748b', fontWeight: 400 }}>{item.unit}</span>
+                {item.quantity} <span style={{ fontSize: '14px', color: '#746C5C', fontWeight: 400 }}>{item.unit}</span>
               </div>
 
               {/* Progress bar */}
-              <div style={{ background: '#1a1a26', borderRadius: '4px', height: '6px', marginBottom: '14px', overflow: 'hidden' }}>
+              <div style={{ background: '#FAF7F0', borderRadius: '4px', height: '6px', marginBottom: '14px', overflow: 'hidden' }}>
                 <div style={{ width: `${pct}%`, height: '100%', background: lc.color, borderRadius: '4px', transition: 'width 0.3s ease' }} />
               </div>
 
               {item.costPerUnit > 0 && (
-                <div style={{ fontSize: '12px', color: '#475569', marginBottom: '12px' }}>
+                <div style={{ fontSize: '12px', color: '#7A7263', marginBottom: '12px' }}>
                   Birim maliyet: ₺{item.costPerUnit} · Toplam: ₺{(item.quantity * item.costPerUnit).toFixed(0)}
                 </div>
               )}
@@ -155,24 +155,24 @@ export default function StockPage() {
                   onClick={() => { setAdjustItem(item); setAdjustMode('add'); setAdjustValue(''); }}
                   style={{
                     flex: 1, padding: '7px', borderRadius: '8px',
-                    background: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.2)',
-                    color: '#4ade80', fontSize: '12px', cursor: 'pointer', fontWeight: 500
+                    background: 'rgba(42,112,73,0.1)', border: '1px solid rgba(42,112,73,0.2)',
+                    color: '#256844', fontSize: '12px', cursor: 'pointer', fontWeight: 500
                   }}
                 >+ Ekle</button>
                 <button
                   onClick={() => openEdit(item)}
                   style={{
                     padding: '7px 12px', borderRadius: '8px',
-                    background: '#1a1a26', border: '1px solid rgba(255,255,255,0.08)',
-                    color: '#94a3b8', fontSize: '12px', cursor: 'pointer'
+                    background: '#FAF7F0', border: '1px solid #E3DACA',
+                    color: '#6B6456', fontSize: '12px', cursor: 'pointer'
                   }}
                 >✏️</button>
                 <button
                   onClick={() => deleteItem(item.id)}
                   style={{
                     padding: '7px 12px', borderRadius: '8px',
-                    background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.15)',
-                    color: '#f87171', fontSize: '12px', cursor: 'pointer'
+                    background: 'rgba(192,57,43,0.08)', border: '1px solid rgba(192,57,43,0.15)',
+                    color: '#A32D22', fontSize: '12px', cursor: 'pointer'
                   }}
                 >🗑</button>
               </div>
@@ -183,9 +183,9 @@ export default function StockPage() {
 
       {/* Add/Edit Modal */}
       {showModal && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100, padding: '20px' }}
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(46,43,36,0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100, padding: '20px' }}
           onClick={e => e.target === e.currentTarget && setShowModal(false)}>
-          <div style={{ background: '#12121a', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '20px', padding: '28px', width: '100%', maxWidth: '420px' }}>
+          <div style={{ background: '#FFFFFF', border: '1px solid #E3DACA', borderRadius: '20px', padding: '28px', width: '100%', maxWidth: '420px' }}>
             <h2 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '24px' }}>{editItem ? 'Stok Düzenle' : 'Yeni Stok Kalemi'}</h2>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
               {[
@@ -195,26 +195,26 @@ export default function StockPage() {
                 { label: 'Birim Maliyet (₺)', key: 'costPerUnit', type: 'number', placeholder: '0' },
               ].map(f => (
                 <div key={f.key}>
-                  <label style={{ fontSize: '12px', color: '#64748b', display: 'block', marginBottom: '6px' }}>{f.label}</label>
+                  <label style={{ fontSize: '12px', color: '#746C5C', display: 'block', marginBottom: '6px' }}>{f.label}</label>
                   <input
                     type={f.type} placeholder={f.placeholder}
                     value={(form as Record<string, string>)[f.key]}
                     onChange={e => setForm(prev => ({ ...prev, [f.key]: e.target.value }))}
-                    style={{ width: '100%', padding: '10px 14px', background: '#1a1a26', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#f8fafc', fontSize: '14px', outline: 'none' }}
+                    style={{ width: '100%', padding: '10px 14px', background: '#FAF7F0', border: '1px solid #D6CBB6', borderRadius: '10px', color: '#2E2B24', fontSize: '14px', outline: 'none' }}
                   />
                 </div>
               ))}
               <div>
-                <label style={{ fontSize: '12px', color: '#64748b', display: 'block', marginBottom: '6px' }}>Birim</label>
+                <label style={{ fontSize: '12px', color: '#746C5C', display: 'block', marginBottom: '6px' }}>Birim</label>
                 <select value={form.unit} onChange={e => setForm(f => ({ ...f, unit: e.target.value }))}
-                  style={{ width: '100%', padding: '10px 14px', background: '#1a1a26', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#f8fafc', fontSize: '14px', outline: 'none' }}>
+                  style={{ width: '100%', padding: '10px 14px', background: '#FAF7F0', border: '1px solid #D6CBB6', borderRadius: '10px', color: '#2E2B24', fontSize: '14px', outline: 'none' }}>
                   {['ml', 'gr', 'adet'].map(u => <option key={u} value={u}>{u}</option>)}
                 </select>
               </div>
             </div>
             <div style={{ display: 'flex', gap: '12px', marginTop: '24px' }}>
-              <button onClick={() => setShowModal(false)} style={{ flex: 1, padding: '12px', borderRadius: '10px', background: '#1a1a26', border: '1px solid rgba(255,255,255,0.08)', color: '#94a3b8', fontSize: '14px', cursor: 'pointer' }}>İptal</button>
-              <button onClick={save} style={{ flex: 1, padding: '12px', borderRadius: '10px', background: 'linear-gradient(135deg, #f59e0b, #d97706)', border: 'none', color: '#000', fontSize: '14px', fontWeight: 700, cursor: 'pointer' }}>{editItem ? 'Güncelle' : 'Ekle'}</button>
+              <button onClick={() => setShowModal(false)} style={{ flex: 1, padding: '12px', borderRadius: '10px', background: '#FAF7F0', border: '1px solid #E3DACA', color: '#6B6456', fontSize: '14px', cursor: 'pointer' }}>İptal</button>
+              <button onClick={save} style={{ flex: 1, padding: '12px', borderRadius: '10px', background: 'linear-gradient(135deg, #2A7049, #256844)', border: 'none', color: '#fff', fontSize: '14px', fontWeight: 700, cursor: 'pointer' }}>{editItem ? 'Güncelle' : 'Ekle'}</button>
             </div>
           </div>
         </div>
@@ -222,20 +222,20 @@ export default function StockPage() {
 
       {/* Adjust Modal */}
       {adjustItem && (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100, padding: '20px' }}
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(46,43,36,0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', zIndex: 100, padding: '20px' }}
           onClick={e => e.target === e.currentTarget && setAdjustItem(null)}>
-          <div style={{ background: '#12121a', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '20px', padding: '28px', width: '100%', maxWidth: '360px' }}>
+          <div style={{ background: '#FFFFFF', border: '1px solid #E3DACA', borderRadius: '20px', padding: '28px', width: '100%', maxWidth: '360px' }}>
             <h2 style={{ fontSize: '18px', fontWeight: 700, marginBottom: '8px' }}>{adjustItem.name}</h2>
-            <p style={{ color: '#64748b', fontSize: '13px', marginBottom: '20px' }}>
+            <p style={{ color: '#746C5C', fontSize: '13px', marginBottom: '20px' }}>
               Mevcut: {adjustItem.quantity} {adjustItem.unit}
             </p>
             <div style={{ display: 'flex', gap: '8px', marginBottom: '14px' }}>
               {(['add', 'set'] as const).map(m => (
                 <button key={m} onClick={() => setAdjustMode(m)} style={{
                   flex: 1, padding: '8px', borderRadius: '8px',
-                  background: adjustMode === m ? 'rgba(245,158,11,0.15)' : '#1a1a26',
-                  border: adjustMode === m ? '1px solid rgba(245,158,11,0.3)' : '1px solid rgba(255,255,255,0.08)',
-                  color: adjustMode === m ? '#f59e0b' : '#94a3b8', fontSize: '13px', cursor: 'pointer', fontWeight: 500
+                  background: adjustMode === m ? 'rgba(42,112,73,0.15)' : '#FAF7F0',
+                  border: adjustMode === m ? '1px solid rgba(42,112,73,0.3)' : '1px solid #E3DACA',
+                  color: adjustMode === m ? '#2A7049' : '#6B6456', fontSize: '13px', cursor: 'pointer', fontWeight: 500
                 }}>
                   {m === 'add' ? '+ Ekle' : '= Yeni Değer'}
                 </button>
@@ -244,11 +244,11 @@ export default function StockPage() {
             <input
               type="number" placeholder="Miktar..." value={adjustValue}
               onChange={e => setAdjustValue(e.target.value)}
-              style={{ width: '100%', padding: '12px 14px', background: '#1a1a26', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#f8fafc', fontSize: '16px', outline: 'none', marginBottom: '16px' }}
+              style={{ width: '100%', padding: '12px 14px', background: '#FAF7F0', border: '1px solid #D6CBB6', borderRadius: '10px', color: '#2E2B24', fontSize: '16px', outline: 'none', marginBottom: '16px' }}
             />
             <div style={{ display: 'flex', gap: '12px' }}>
-              <button onClick={() => setAdjustItem(null)} style={{ flex: 1, padding: '12px', borderRadius: '10px', background: '#1a1a26', border: '1px solid rgba(255,255,255,0.08)', color: '#94a3b8', cursor: 'pointer' }}>İptal</button>
-              <button onClick={doAdjust} style={{ flex: 1, padding: '12px', borderRadius: '10px', background: 'linear-gradient(135deg, #22c55e, #16a34a)', border: 'none', color: '#000', fontWeight: 700, cursor: 'pointer' }}>Güncelle</button>
+              <button onClick={() => setAdjustItem(null)} style={{ flex: 1, padding: '12px', borderRadius: '10px', background: '#FAF7F0', border: '1px solid #E3DACA', color: '#6B6456', cursor: 'pointer' }}>İptal</button>
+              <button onClick={doAdjust} style={{ flex: 1, padding: '12px', borderRadius: '10px', background: 'linear-gradient(135deg, #2A7049, #256844)', border: 'none', color: '#fff', fontWeight: 700, cursor: 'pointer' }}>Güncelle</button>
             </div>
           </div>
         </div>

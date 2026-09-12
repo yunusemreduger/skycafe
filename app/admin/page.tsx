@@ -89,17 +89,17 @@ export default function Dashboard() {
   };
 
   const adminCards = [
-    { label: "Bugünkü Gelir", value: `₺${stats.todayRevenue.toLocaleString('tr-TR')}`, icon: '💰', color: '#22c55e', sub: `Gider: ₺${stats.todayExpenses.toLocaleString('tr-TR')}`, href: '/admin/finance' },
-    { label: "Bugünkü Siparişler", value: stats.todayOrders, icon: '📊', color: '#3b82f6', sub: 'Toplam sipariş', href: '/admin/orders' },
-    { label: "Bekleyen Siparişler", value: stats.pendingOrders, icon: '🛎', color: '#f59e0b', sub: `Hazırlanıyor: ${stats.preparingOrders}`, href: '/admin/orders' },
-    { label: "Düşük Stok", value: stats.lowStock, icon: '⚠️', color: stats.lowStock > 0 ? '#ef4444' : '#22c55e', sub: stats.lowStock > 0 ? 'Stok uyarısı!' : 'Stok yeterli', href: '/admin/stock' },
+    { label: "Bugünkü Gelir", value: `₺${stats.todayRevenue.toLocaleString('tr-TR')}`, icon: '💰', color: '#2A7049', sub: `Gider: ₺${stats.todayExpenses.toLocaleString('tr-TR')}`, href: '/admin/finance' },
+    { label: "Bugünkü Siparişler", value: stats.todayOrders, icon: '📊', color: '#2563EB', sub: 'Toplam sipariş', href: '/admin/orders' },
+    { label: "Bekleyen Siparişler", value: stats.pendingOrders, icon: '🛎', color: '#2A7049', sub: `Hazırlanıyor: ${stats.preparingOrders}`, href: '/admin/orders' },
+    { label: "Düşük Stok", value: stats.lowStock, icon: '⚠️', color: stats.lowStock > 0 ? '#C0392B' : '#2A7049', sub: stats.lowStock > 0 ? 'Stok uyarısı!' : 'Stok yeterli', href: '/admin/stock' },
   ];
 
   // Personel kartları — ciro / gider / maliyet yok
   const staffCards = [
-    { label: "Bekleyen Siparişler", value: stats.pendingOrders, icon: '🛎', color: '#f59e0b', sub: `Hazırlanıyor: ${stats.preparingOrders}`, href: '/admin/orders' },
-    { label: "Bugünkü Siparişler", value: stats.todayOrders, icon: '📊', color: '#3b82f6', sub: 'Toplam sipariş', href: '/admin/orders' },
-    { label: "Açık Borçlar", value: openDebts, icon: '📒', color: openDebts > 0 ? '#f59e0b' : '#22c55e', sub: openDebts > 0 ? 'Tahsil edilmedi' : 'Açık borç yok', href: '/admin/debts' },
+    { label: "Bekleyen Siparişler", value: stats.pendingOrders, icon: '🛎', color: '#2A7049', sub: `Hazırlanıyor: ${stats.preparingOrders}`, href: '/admin/orders' },
+    { label: "Bugünkü Siparişler", value: stats.todayOrders, icon: '📊', color: '#2563EB', sub: 'Toplam sipariş', href: '/admin/orders' },
+    { label: "Açık Borçlar", value: openDebts, icon: '📒', color: openDebts > 0 ? '#2A7049' : '#2A7049', sub: openDebts > 0 ? 'Tahsil edilmedi' : 'Açık borç yok', href: '/admin/debts' },
   ];
 
   const statCards = isStaff ? staffCards : adminCards;
@@ -108,7 +108,7 @@ export default function Dashboard() {
     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '60vh' }}>
       <div style={{ textAlign: 'center' }}>
         <div style={{ fontSize: '40px', marginBottom: '16px' }}>☕</div>
-        <div style={{ color: '#94a3b8', fontSize: '16px' }}>Yükleniyor...</div>
+        <div style={{ color: '#6B6456', fontSize: '16px' }}>Yükleniyor...</div>
       </div>
     </div>
   );
@@ -120,7 +120,7 @@ export default function Dashboard() {
         <h1 style={{ fontSize: '26px', fontWeight: 700, letterSpacing: '-0.5px', marginBottom: '4px' }}>
           Hoş Geldin ☀️
         </h1>
-        <p style={{ color: '#64748b', fontSize: '14px' }}>
+        <p style={{ color: '#746C5C', fontSize: '14px' }}>
           {new Date().toLocaleDateString('tr-TR', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
         </p>
       </div>
@@ -130,8 +130,8 @@ export default function Dashboard() {
         {statCards.map((card, i) => (
           <Link key={i} href={card.href} style={{ textDecoration: 'none' }}>
             <div className="card-hover" style={{
-              background: '#12121a',
-              border: '1px solid rgba(255,255,255,0.06)',
+              background: '#FFFFFF',
+              border: '1px solid #E3DACA',
               borderRadius: '16px', padding: '22px',
               cursor: 'pointer',
             }}>
@@ -146,8 +146,8 @@ export default function Dashboard() {
               <div style={{ fontSize: '26px', fontWeight: 700, color: card.color, marginBottom: '4px' }}>
                 {card.value}
               </div>
-              <div style={{ fontSize: '13px', color: '#94a3b8', fontWeight: 500 }}>{card.label}</div>
-              <div style={{ fontSize: '11px', color: '#475569', marginTop: '4px' }}>{card.sub}</div>
+              <div style={{ fontSize: '13px', color: '#6B6456', fontWeight: 500 }}>{card.label}</div>
+              <div style={{ fontSize: '11px', color: '#7A7263', marginTop: '4px' }}>{card.sub}</div>
             </div>
           </Link>
         ))}
@@ -155,22 +155,22 @@ export default function Dashboard() {
 
       {/* Recent orders */}
       <div style={{
-        background: '#12121a',
-        border: '1px solid rgba(255,255,255,0.06)',
+        background: '#FFFFFF',
+        border: '1px solid #E3DACA',
         borderRadius: '16px', overflow: 'hidden'
       }}>
         <div style={{
-          padding: '20px 24px', borderBottom: '1px solid rgba(255,255,255,0.05)',
+          padding: '20px 24px', borderBottom: '1px solid #EFE8DA',
           display: 'flex', justifyContent: 'space-between', alignItems: 'center'
         }}>
           <h2 style={{ fontSize: '16px', fontWeight: 600 }}>Son Siparişler</h2>
-          <Link href="/admin/orders" style={{ fontSize: '13px', color: '#f59e0b', textDecoration: 'none' }}>
+          <Link href="/admin/orders" style={{ fontSize: '13px', color: '#2A7049', textDecoration: 'none' }}>
             Tümünü gör →
           </Link>
         </div>
 
         {recentOrders.length === 0 ? (
-          <div style={{ padding: '48px', textAlign: 'center', color: '#475569' }}>
+          <div style={{ padding: '48px', textAlign: 'center', color: '#7A7263' }}>
             <div style={{ fontSize: '32px', marginBottom: '12px' }}>📭</div>
             <div>Henüz sipariş yok</div>
           </div>
@@ -179,27 +179,27 @@ export default function Dashboard() {
             {recentOrders.map((order, i) => (
               <div key={order.id} style={{
                 padding: '16px 24px',
-                borderBottom: i < recentOrders.length - 1 ? '1px solid rgba(255,255,255,0.04)' : 'none',
+                borderBottom: i < recentOrders.length - 1 ? '1px solid #EFE8DA' : 'none',
                 display: 'flex', alignItems: 'center', gap: '16px',
               }}>
                 <div style={{
                   width: '40px', height: '40px', borderRadius: '10px',
-                  background: '#1a1a26', display: 'flex', alignItems: 'center',
+                  background: '#FAF7F0', display: 'flex', alignItems: 'center',
                   justifyContent: 'center', fontSize: '16px', flexShrink: 0,
-                  fontWeight: 700, color: '#f59e0b'
+                  fontWeight: 700, color: '#2A7049'
                 }}>
                   {order.tableNumber}
                 </div>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <div style={{ fontSize: '13px', color: '#f8fafc', fontWeight: 500, marginBottom: '2px' }}>
+                  <div style={{ fontSize: '13px', color: '#2E2B24', fontWeight: 500, marginBottom: '2px' }}>
                     Daire {order.tableNumber}
                   </div>
-                  <div style={{ fontSize: '12px', color: '#64748b', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                  <div style={{ fontSize: '12px', color: '#746C5C', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                     {order.items.map(i => `${i.name} x${i.quantity}`).join(', ')}
                   </div>
                 </div>
                 <div style={{ textAlign: 'right', flexShrink: 0 }}>
-                  <div style={{ fontSize: '14px', fontWeight: 600, color: '#22c55e', marginBottom: '4px' }}>
+                  <div style={{ fontSize: '14px', fontWeight: 600, color: '#2A7049', marginBottom: '4px' }}>
                     ₺{order.total}
                   </div>
                   <span className={`status-${order.status}`} style={{
@@ -208,7 +208,7 @@ export default function Dashboard() {
                     {statusLabel[order.status]}
                   </span>
                 </div>
-                <div style={{ fontSize: '11px', color: '#475569', flexShrink: 0, width: '44px', textAlign: 'right' }}>
+                <div style={{ fontSize: '11px', color: '#7A7263', flexShrink: 0, width: '44px', textAlign: 'right' }}>
                   {formatTime(order.createdAt)}
                 </div>
               </div>

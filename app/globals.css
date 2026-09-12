@@ -1,15 +1,23 @@
 @import "tailwindcss";
 
+/* SKY PROTEIN BAR — krem bej açık tema */
 :root {
-  --bg-dark: #0a0a0f;
-  --bg-card: #12121a;
-  --bg-surface: #1a1a26;
-  --amber: #f59e0b;
-  --amber-light: #fbbf24;
-  --amber-dark: #d97706;
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --border: #1e2035;
+  --bg-page: #F4EFE5;      /* sayfa zemini */
+  --bg-card: #FFFFFF;      /* kartlar */
+  --bg-surface: #FAF7F0;   /* input, ikincil yüzey */
+  --bg-panel: #EFE8DA;     /* sidebar, üst bar */
+
+  --accent: #2A7049;       /* ana vurgu — yeşil */
+  --accent-light: #2E7D53;
+  --accent-dark: #256844;
+
+  --text-primary: #2E2B24;
+  --text-secondary: #6B6456;
+  --text-muted: #746C5C;
+  --text-faint: #7A7263;
+
+  --border: #E3DACA;
+  --border-strong: #D6CBB6;
 }
 
 * {
@@ -17,7 +25,7 @@
 }
 
 body {
-  background: var(--bg-dark);
+  background: var(--bg-page);
   color: var(--text-primary);
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
   margin: 0;
@@ -25,13 +33,13 @@ body {
 
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #2d2d45; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #3d3d5c; }
+::-webkit-scrollbar-thumb { background: #D6CBB6; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #C4B69C; }
 
 .glass {
-  background: rgba(26, 26, 38, 0.7);
+  background: rgba(255, 255, 255, 0.75);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255,255,255,0.06);
+  border: 1px solid var(--border);
 }
 
 .card-hover {
@@ -39,18 +47,30 @@ body {
 }
 .card-hover:hover {
   transform: translateY(-2px);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  box-shadow: 0 10px 24px rgba(46, 43, 36, 0.08);
 }
 
 .gradient-amber {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
+  background: linear-gradient(135deg, #2A7049, #256844);
 }
 
 .text-gradient {
-  background: linear-gradient(135deg, #f59e0b, #fbbf24);
+  background: linear-gradient(135deg, #2A7049, #2E7D53);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+/* Marka başlığı */
+.brand-title {
+  font-weight: 600;
+  letter-spacing: 1.6px;
+  color: var(--text-primary);
+}
+.brand-sub {
+  letter-spacing: 2px;
+  color: var(--text-muted);
+  text-transform: uppercase;
 }
 
 @keyframes pulse-ring {
@@ -70,8 +90,8 @@ body {
 }
 .fade-in { animation: fade-in 0.4s ease forwards; }
 
-.status-pending { background: rgba(251, 191, 36, 0.15); color: #fbbf24; border: 1px solid rgba(251,191,36,0.3); }
-.status-preparing { background: rgba(59, 130, 246, 0.15); color: #60a5fa; border: 1px solid rgba(59,130,246,0.3); }
-.status-ready { background: rgba(34, 197, 94, 0.15); color: #4ade80; border: 1px solid rgba(34,197,94,0.3); }
-.status-completed { background: rgba(148, 163, 184, 0.1); color: #94a3b8; border: 1px solid rgba(148,163,184,0.2); }
-.status-cancelled { background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239,68,68,0.3); }
+.status-pending { background: rgba(181, 116, 15, 0.12); color: #8A5709; border: 1px solid rgba(181,116,15,0.25); }
+.status-preparing { background: rgba(37, 99, 235, 0.1); color: #1D4ED8; border: 1px solid rgba(37,99,235,0.22); }
+.status-ready { background: rgba(46, 125, 83, 0.12); color: #226141; border: 1px solid rgba(42,112,73,0.25); }
+.status-completed { background: rgba(107, 100, 86, 0.1); color: #6B6456; border: 1px solid rgba(107,100,86,0.2); }
+.status-cancelled { background: rgba(192, 57, 43, 0.1); color: #A32D22; border: 1px solid rgba(192,57,43,0.22); }

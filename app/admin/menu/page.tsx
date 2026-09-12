@@ -114,21 +114,21 @@ export default function MenuPage() {
     return acc;
   }, {} as Record<string, MenuItem[]>);
 
-  if (loading) return <div style={{ color: '#94a3b8', padding: '40px' }}>Yükleniyor...</div>;
+  if (loading) return <div style={{ color: '#6B6456', padding: '40px' }}>Yükleniyor...</div>;
 
   return (
     <div className="fade-in">
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px', flexWrap: 'wrap', gap: '12px' }}>
         <div>
           <h1 style={{ fontSize: '24px', fontWeight: 700, marginBottom: '4px' }}>Menü Yönetimi</h1>
-          <p style={{ color: '#64748b', fontSize: '13px' }}>{items.length} ürün</p>
+          <p style={{ color: '#746C5C', fontSize: '13px' }}>{items.length} ürün</p>
         </div>
         <button
           onClick={openCreate}
           style={{
             padding: '10px 20px', borderRadius: '10px',
-            background: 'linear-gradient(135deg, #f59e0b, #d97706)',
-            border: 'none', color: '#000', fontWeight: 700,
+            background: 'linear-gradient(135deg, #2A7049, #256844)',
+            border: 'none', color: '#fff', fontWeight: 700,
             fontSize: '14px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px'
           }}
         >
@@ -145,9 +145,9 @@ export default function MenuPage() {
             style={{
               padding: '7px 14px', borderRadius: '8px',
               cursor: 'pointer', fontSize: '12px', fontWeight: 500, whiteSpace: 'nowrap',
-              background: filterCat === cat ? 'rgba(245,158,11,0.15)' : '#12121a',
-              color: filterCat === cat ? '#f59e0b' : '#94a3b8',
-              border: filterCat === cat ? '1px solid rgba(245,158,11,0.3)' : '1px solid rgba(255,255,255,0.06)',
+              background: filterCat === cat ? 'rgba(42,112,73,0.15)' : '#FFFFFF',
+              color: filterCat === cat ? '#2A7049' : '#6B6456',
+              border: filterCat === cat ? '1px solid rgba(42,112,73,0.3)' : '1px solid #E3DACA',
             }}
           >
             {cat === 'all' ? '🍽️ Tümü' : cat}
@@ -158,21 +158,21 @@ export default function MenuPage() {
       {/* Items by category */}
       {Object.entries(groupedByCategory).map(([cat, catItems]) => (
         <div key={cat} style={{ marginBottom: '28px' }}>
-          <h3 style={{ fontSize: '13px', fontWeight: 600, color: '#64748b', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '12px' }}>
+          <h3 style={{ fontSize: '13px', fontWeight: 600, color: '#746C5C', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '12px' }}>
             {cat}
           </h3>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: '12px' }}>
             {catItems.map(item => (
               <div key={item.id} className="card-hover" style={{
-                background: '#12121a',
-                border: '1px solid rgba(255,255,255,0.06)',
+                background: '#FFFFFF',
+                border: '1px solid #E3DACA',
                 borderRadius: '14px', padding: '18px',
                 opacity: item.available ? 1 : 0.5,
               }}>
                 <div style={{ display: 'flex', gap: '14px' }}>
                   <div style={{
                     width: '52px', height: '52px', borderRadius: '12px',
-                    background: '#1a1a26', display: 'flex', alignItems: 'center',
+                    background: '#FAF7F0', display: 'flex', alignItems: 'center',
                     justifyContent: 'center', fontSize: '24px', flexShrink: 0
                   }}>{item.emoji}</div>
                   <div style={{ flex: 1, minWidth: 0 }}>
@@ -181,24 +181,24 @@ export default function MenuPage() {
                         <div style={{ fontWeight: 600, fontSize: '14px', marginBottom: '2px' }}>{item.name}</div>
                         <div style={{ display: 'flex', gap: '4px', flexWrap: 'wrap' }}>
                           {item.featured && (
-                            <span style={{ fontSize: '10px', background: 'rgba(245,158,11,0.15)', color: '#f59e0b', padding: '1px 6px', borderRadius: '4px', fontWeight: 600 }}>
+                            <span style={{ fontSize: '10px', background: 'rgba(42,112,73,0.15)', color: '#2A7049', padding: '1px 6px', borderRadius: '4px', fontWeight: 600 }}>
                               ⭐ Öne Çıkan
                             </span>
                           )}
                           {item.recipe?.length ? (
-                            <span style={{ fontSize: '10px', background: 'rgba(34,197,94,0.12)', color: '#4ade80', padding: '1px 6px', borderRadius: '4px', fontWeight: 600 }}>
+                            <span style={{ fontSize: '10px', background: 'rgba(42,112,73,0.12)', color: '#256844', padding: '1px 6px', borderRadius: '4px', fontWeight: 600 }}>
                               🧾 {item.recipe.length} malzeme
                             </span>
                           ) : (
-                            <span style={{ fontSize: '10px', background: 'rgba(148,163,184,0.1)', color: '#64748b', padding: '1px 6px', borderRadius: '4px', fontWeight: 600 }}>
+                            <span style={{ fontSize: '10px', background: 'rgba(107,100,86,0.1)', color: '#746C5C', padding: '1px 6px', borderRadius: '4px', fontWeight: 600 }}>
                               reçetesiz
                             </span>
                           )}
                         </div>
                       </div>
-                      <span style={{ fontSize: '16px', fontWeight: 700, color: '#22c55e', flexShrink: 0 }}>₺{item.price}</span>
+                      <span style={{ fontSize: '16px', fontWeight: 700, color: '#2A7049', flexShrink: 0 }}>₺{item.price}</span>
                     </div>
-                    <p style={{ fontSize: '12px', color: '#64748b', margin: '6px 0 0', lineHeight: '1.4', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    <p style={{ fontSize: '12px', color: '#746C5C', margin: '6px 0 0', lineHeight: '1.4', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                       {item.description}
                     </p>
                   </div>
@@ -209,9 +209,9 @@ export default function MenuPage() {
                     onClick={() => toggleAvailable(item)}
                     style={{
                       flex: 1, padding: '7px', borderRadius: '8px',
-                      background: item.available ? 'rgba(34,197,94,0.1)' : 'rgba(239,68,68,0.1)',
-                      border: item.available ? '1px solid rgba(34,197,94,0.2)' : '1px solid rgba(239,68,68,0.2)',
-                      color: item.available ? '#4ade80' : '#f87171',
+                      background: item.available ? 'rgba(42,112,73,0.1)' : 'rgba(192,57,43,0.1)',
+                      border: item.available ? '1px solid rgba(42,112,73,0.2)' : '1px solid rgba(192,57,43,0.2)',
+                      color: item.available ? '#256844' : '#A32D22',
                       fontSize: '12px', cursor: 'pointer', fontWeight: 500
                     }}
                   >
@@ -221,16 +221,16 @@ export default function MenuPage() {
                     onClick={() => openEdit(item)}
                     style={{
                       padding: '7px 14px', borderRadius: '8px',
-                      background: '#1a1a26', border: '1px solid rgba(255,255,255,0.08)',
-                      color: '#94a3b8', fontSize: '12px', cursor: 'pointer'
+                      background: '#FAF7F0', border: '1px solid #E3DACA',
+                      color: '#6B6456', fontSize: '12px', cursor: 'pointer'
                     }}
                   >✏️</button>
                   <button
                     onClick={() => deleteItem(item.id)}
                     style={{
                       padding: '7px 14px', borderRadius: '8px',
-                      background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.15)',
-                      color: '#f87171', fontSize: '12px', cursor: 'pointer'
+                      background: 'rgba(192,57,43,0.08)', border: '1px solid rgba(192,57,43,0.15)',
+                      color: '#A32D22', fontSize: '12px', cursor: 'pointer'
                     }}
                   >🗑</button>
                 </div>
@@ -243,12 +243,12 @@ export default function MenuPage() {
       {/* Modal */}
       {showModal && (
         <div style={{
-          position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.8)',
+          position: 'fixed', inset: 0, background: 'rgba(46,43,36,0.45)',
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           zIndex: 100, padding: '20px'
         }} onClick={e => e.target === e.currentTarget && setShowModal(false)}>
           <div style={{
-            background: '#12121a', border: '1px solid rgba(255,255,255,0.08)',
+            background: '#FFFFFF', border: '1px solid #E3DACA',
             borderRadius: '20px', padding: '28px', width: '100%', maxWidth: '480px',
             maxHeight: '90vh', overflowY: 'auto'
           }}>
@@ -259,15 +259,15 @@ export default function MenuPage() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
               {/* Emoji picker */}
               <div>
-                <label style={{ fontSize: '12px', color: '#64748b', display: 'block', marginBottom: '8px' }}>Emoji</label>
+                <label style={{ fontSize: '12px', color: '#746C5C', display: 'block', marginBottom: '8px' }}>Emoji</label>
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
                   {EMOJIS.map(e => (
                     <button key={e} onClick={() => setForm(f => ({ ...f, emoji: e }))}
                       style={{
                         width: '40px', height: '40px', borderRadius: '8px', border: 'none',
-                        background: form.emoji === e ? 'rgba(245,158,11,0.2)' : '#1a1a26',
+                        background: form.emoji === e ? 'rgba(42,112,73,0.2)' : '#FAF7F0',
                         cursor: 'pointer', fontSize: '20px',
-                        outline: form.emoji === e ? '2px solid #f59e0b' : 'none',
+                        outline: form.emoji === e ? '2px solid #2A7049' : 'none',
                       }}
                     >{e}</button>
                   ))}
@@ -275,38 +275,38 @@ export default function MenuPage() {
               </div>
 
               <div>
-                <label style={{ fontSize: '12px', color: '#64748b', display: 'block', marginBottom: '6px' }}>Ürün Adı *</label>
+                <label style={{ fontSize: '12px', color: '#746C5C', display: 'block', marginBottom: '6px' }}>Ürün Adı *</label>
                 <input
                   value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
                   placeholder="örn. Türk Kahvesi"
-                  style={{ width: '100%', padding: '10px 14px', background: '#1a1a26', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#f8fafc', fontSize: '14px', outline: 'none' }}
+                  style={{ width: '100%', padding: '10px 14px', background: '#FAF7F0', border: '1px solid #D6CBB6', borderRadius: '10px', color: '#2E2B24', fontSize: '14px', outline: 'none' }}
                 />
               </div>
 
               <div>
-                <label style={{ fontSize: '12px', color: '#64748b', display: 'block', marginBottom: '6px' }}>Açıklama</label>
+                <label style={{ fontSize: '12px', color: '#746C5C', display: 'block', marginBottom: '6px' }}>Açıklama</label>
                 <textarea
                   value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))}
                   placeholder="Kısa açıklama..."
                   rows={2}
-                  style={{ width: '100%', padding: '10px 14px', background: '#1a1a26', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#f8fafc', fontSize: '14px', outline: 'none', resize: 'vertical' }}
+                  style={{ width: '100%', padding: '10px 14px', background: '#FAF7F0', border: '1px solid #D6CBB6', borderRadius: '10px', color: '#2E2B24', fontSize: '14px', outline: 'none', resize: 'vertical' }}
                 />
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '12px' }}>
                 <div>
-                  <label style={{ fontSize: '12px', color: '#64748b', display: 'block', marginBottom: '6px' }}>Fiyat (₺) *</label>
+                  <label style={{ fontSize: '12px', color: '#746C5C', display: 'block', marginBottom: '6px' }}>Fiyat (₺) *</label>
                   <input
                     type="number" value={form.price} onChange={e => setForm(f => ({ ...f, price: e.target.value }))}
                     placeholder="0"
-                    style={{ width: '100%', padding: '10px 14px', background: '#1a1a26', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#f8fafc', fontSize: '14px', outline: 'none' }}
+                    style={{ width: '100%', padding: '10px 14px', background: '#FAF7F0', border: '1px solid #D6CBB6', borderRadius: '10px', color: '#2E2B24', fontSize: '14px', outline: 'none' }}
                   />
                 </div>
                 <div>
-                  <label style={{ fontSize: '12px', color: '#64748b', display: 'block', marginBottom: '6px' }}>Kategori</label>
+                  <label style={{ fontSize: '12px', color: '#746C5C', display: 'block', marginBottom: '6px' }}>Kategori</label>
                   <select
                     value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))}
-                    style={{ width: '100%', padding: '10px 14px', background: '#1a1a26', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '10px', color: '#f8fafc', fontSize: '14px', outline: 'none' }}
+                    style={{ width: '100%', padding: '10px 14px', background: '#FAF7F0', border: '1px solid #D6CBB6', borderRadius: '10px', color: '#2E2B24', fontSize: '14px', outline: 'none' }}
                   >
                     {CATEGORY_ORDER.map(c => <option key={c} value={c}>{c}</option>)}
                   </select>
@@ -314,11 +314,11 @@ export default function MenuPage() {
               </div>
 
               <div style={{ display: 'flex', gap: '16px' }}>
-                <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '13px', color: '#94a3b8' }}>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '13px', color: '#6B6456' }}>
                   <input type="checkbox" checked={form.available} onChange={e => setForm(f => ({ ...f, available: e.target.checked }))} />
                   Mevcut
                 </label>
-                <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '13px', color: '#94a3b8' }}>
+                <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '13px', color: '#6B6456' }}>
                   <input type="checkbox" checked={form.featured} onChange={e => setForm(f => ({ ...f, featured: e.target.checked }))} />
                   ⭐ Öne Çıkan
                 </label>
@@ -326,18 +326,18 @@ export default function MenuPage() {
             </div>
 
             {/* Reçete — çoklu malzeme */}
-            <div style={{ marginTop: '16px', padding: '14px', background: '#0d0d18', borderRadius: '10px', border: '1px solid rgba(255,255,255,0.06)' }}>
+            <div style={{ marginTop: '16px', padding: '14px', background: '#EFE8DA', borderRadius: '10px', border: '1px solid #E3DACA' }}>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px' }}>
-                <div style={{ fontSize: '12px', color: '#64748b', fontWeight: 600 }}>🧾 Reçete — 1 adet için kullanılan malzemeler</div>
+                <div style={{ fontSize: '12px', color: '#746C5C', fontWeight: 600 }}>🧾 Reçete — 1 adet için kullanılan malzemeler</div>
                 {recipe.length > 0 && recipeCost(recipe) > 0 && (
-                  <div style={{ fontSize: '11px', color: '#22c55e', fontWeight: 600 }}>
+                  <div style={{ fontSize: '11px', color: '#2A7049', fontWeight: 600 }}>
                     Maliyet ≈ ₺{recipeCost(recipe).toFixed(2)}
                   </div>
                 )}
               </div>
 
               {recipe.length === 0 && (
-                <div style={{ fontSize: '12px', color: '#475569', padding: '8px 0 12px' }}>
+                <div style={{ fontSize: '12px', color: '#7A7263', padding: '8px 0 12px' }}>
                   Henüz malzeme eklenmedi. Sipariş tamamlandığında stok düşmesi için malzeme ekleyin.
                 </div>
               )}
@@ -350,7 +350,7 @@ export default function MenuPage() {
                       <select
                         value={line.stockItemId}
                         onChange={e => updateRecipeLine(i, { stockItemId: e.target.value })}
-                        style={{ width: '100%', padding: '8px 10px', background: '#12121a', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', color: '#f8fafc', fontSize: '13px', outline: 'none' }}
+                        style={{ width: '100%', padding: '8px 10px', background: '#FFFFFF', border: '1px solid #E3DACA', borderRadius: '8px', color: '#2E2B24', fontSize: '13px', outline: 'none' }}
                       >
                         <option value="">— Malzeme seç —</option>
                         {stockItems.map(s => (
@@ -366,16 +366,16 @@ export default function MenuPage() {
                         placeholder="Miktar"
                         value={line.amount || ''}
                         onChange={e => updateRecipeLine(i, { amount: parseFloat(e.target.value) || 0 })}
-                        style={{ width: '100%', padding: '8px 42px 8px 10px', background: '#12121a', border: '1px solid rgba(255,255,255,0.08)', borderRadius: '8px', color: '#f8fafc', fontSize: '13px', outline: 'none' }}
+                        style={{ width: '100%', padding: '8px 42px 8px 10px', background: '#FFFFFF', border: '1px solid #E3DACA', borderRadius: '8px', color: '#2E2B24', fontSize: '13px', outline: 'none' }}
                       />
-                      <span style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', fontSize: '11px', color: '#64748b', pointerEvents: 'none' }}>
+                      <span style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', fontSize: '11px', color: '#746C5C', pointerEvents: 'none' }}>
                         {stok?.unit || ''}
                       </span>
                     </div>
                     <button
                       onClick={() => removeRecipeLine(i)}
                       title="Malzemeyi kaldır"
-                      style={{ padding: '8px 11px', background: 'rgba(239,68,68,0.1)', border: '1px solid rgba(239,68,68,0.2)', borderRadius: '8px', color: '#f87171', fontSize: '13px', cursor: 'pointer', lineHeight: 1 }}
+                      style={{ padding: '8px 11px', background: 'rgba(192,57,43,0.1)', border: '1px solid rgba(192,57,43,0.2)', borderRadius: '8px', color: '#A32D22', fontSize: '13px', cursor: 'pointer', lineHeight: 1 }}
                     >✕</button>
                   </div>
                 );
@@ -383,11 +383,11 @@ export default function MenuPage() {
 
               <button
                 onClick={addRecipeLine}
-                style={{ width: '100%', marginTop: '4px', padding: '9px', background: 'rgba(245,158,11,0.08)', border: '1px dashed rgba(245,158,11,0.3)', borderRadius: '8px', color: '#f59e0b', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}
+                style={{ width: '100%', marginTop: '4px', padding: '9px', background: 'rgba(42,112,73,0.08)', border: '1px dashed rgba(42,112,73,0.3)', borderRadius: '8px', color: '#2A7049', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}
               >+ Malzeme Ekle</button>
 
-              <div style={{ fontSize: '11px', color: '#475569', marginTop: '10px', lineHeight: 1.5 }}>
-                Miktarlar stok kaleminin birimindedir (ml / gr / adet). Sipariş <strong style={{ color: '#64748b' }}>Tamamlandı</strong> olarak işaretlendiğinde bu malzemeler ana stoktan otomatik düşer.
+              <div style={{ fontSize: '11px', color: '#7A7263', marginTop: '10px', lineHeight: 1.5 }}>
+                Miktarlar stok kaleminin birimindedir (ml / gr / adet). Sipariş <strong style={{ color: '#746C5C' }}>Tamamlandı</strong> olarak işaretlendiğinde bu malzemeler ana stoktan otomatik düşer.
               </div>
             </div>
 
@@ -396,16 +396,16 @@ export default function MenuPage() {
                 onClick={() => setShowModal(false)}
                 style={{
                   flex: 1, padding: '12px', borderRadius: '10px',
-                  background: '#1a1a26', border: '1px solid rgba(255,255,255,0.08)',
-                  color: '#94a3b8', fontSize: '14px', cursor: 'pointer'
+                  background: '#FAF7F0', border: '1px solid #E3DACA',
+                  color: '#6B6456', fontSize: '14px', cursor: 'pointer'
                 }}
               >İptal</button>
               <button
                 onClick={save}
                 style={{
                   flex: 1, padding: '12px', borderRadius: '10px',
-                  background: 'linear-gradient(135deg, #f59e0b, #d97706)',
-                  border: 'none', color: '#000', fontSize: '14px', fontWeight: 700, cursor: 'pointer'
+                  background: 'linear-gradient(135deg, #2A7049, #256844)',
+                  border: 'none', color: '#fff', fontSize: '14px', fontWeight: 700, cursor: 'pointer'
                 }}
               >{editItem ? 'Güncelle' : 'Ekle'}</button>
             </div>

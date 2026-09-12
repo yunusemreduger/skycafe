@@ -39,7 +39,7 @@ export default function LoginPage() {
 
   return (
     <div style={{
-      minHeight: '100vh', background: '#0a0a0f',
+      minHeight: '100vh', background: '#F4EFE5',
       display: 'flex', alignItems: 'center', justifyContent: 'center',
       padding: '20px',
     }}>
@@ -47,41 +47,28 @@ export default function LoginPage() {
       <div style={{
         position: 'fixed', top: '30%', left: '50%', transform: 'translate(-50%, -50%)',
         width: '500px', height: '500px',
-        background: 'radial-gradient(circle, rgba(245,158,11,0.06) 0%, transparent 70%)',
+        background: 'radial-gradient(circle, rgba(42,112,73,0.06) 0%, transparent 70%)',
         pointerEvents: 'none',
       }} />
 
       <div style={{
         width: '100%', maxWidth: '400px',
-        background: '#12121a',
-        border: '1px solid rgba(255,255,255,0.07)',
+        background: '#FFFFFF',
+        border: '1px solid #E3DACA',
         borderRadius: '24px',
         padding: '40px 36px',
         position: 'relative',
       }}>
         {/* Logo */}
         <div style={{ textAlign: 'center', marginBottom: '36px' }}>
-          <div style={{
-            width: '64px', height: '64px', borderRadius: '18px',
-            background: 'linear-gradient(135deg, #f59e0b, #d97706)',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            fontSize: '30px', margin: '0 auto 16px',
-            boxShadow: '0 8px 32px rgba(245,158,11,0.25)',
-          }}>☕</div>
-          <h1 style={{ fontSize: '24px', fontWeight: 800, letterSpacing: '-0.5px', margin: 0 }}>
-            <span style={{
-              background: 'linear-gradient(135deg, #f59e0b, #fbbf24)',
-              WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent',
-            }}>Sky</span>
-            <span style={{ color: '#f8fafc' }}>Café</span>
-          </h1>
-          <p style={{ color: '#475569', fontSize: '13px', marginTop: '6px' }}>Admin Paneli</p>
+          <h1 className="brand-title" style={{ fontSize: '20px', margin: 0 }}>SKY PROTEIN BAR</h1>
+          <p className="brand-sub" style={{ fontSize: '10px', marginTop: '6px' }}>Yönetim Paneli</p>
         </div>
 
         {/* Form */}
         <form onSubmit={submit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
           <div>
-            <label style={{ fontSize: '12px', color: '#64748b', display: 'block', marginBottom: '8px', fontWeight: 500 }}>
+            <label style={{ fontSize: '12px', color: '#746C5C', display: 'block', marginBottom: '8px', fontWeight: 500 }}>
               Kullanıcı Adı
             </label>
             <input
@@ -92,18 +79,18 @@ export default function LoginPage() {
               autoComplete="username"
               style={{
                 width: '100%', padding: '12px 16px',
-                background: '#1a1a26',
-                border: error ? '1px solid rgba(239,68,68,0.5)' : '1px solid rgba(255,255,255,0.08)',
-                borderRadius: '12px', color: '#f8fafc', fontSize: '15px',
+                background: '#FAF7F0',
+                border: error ? '1px solid rgba(192,57,43,0.5)' : '1px solid #E3DACA',
+                borderRadius: '12px', color: '#2E2B24', fontSize: '15px',
                 outline: 'none', transition: 'border-color 0.15s',
               }}
-              onFocus={e => { if (!error) e.target.style.borderColor = 'rgba(245,158,11,0.4)'; }}
-              onBlur={e => { if (!error) e.target.style.borderColor = 'rgba(255,255,255,0.08)'; }}
+              onFocus={e => { if (!error) e.target.style.borderColor = 'rgba(42,112,73,0.4)'; }}
+              onBlur={e => { if (!error) e.target.style.borderColor = '#E3DACA'; }}
             />
           </div>
 
           <div>
-            <label style={{ fontSize: '12px', color: '#64748b', display: 'block', marginBottom: '8px', fontWeight: 500 }}>
+            <label style={{ fontSize: '12px', color: '#746C5C', display: 'block', marginBottom: '8px', fontWeight: 500 }}>
               Şifre
             </label>
             <div style={{ position: 'relative' }}>
@@ -115,20 +102,20 @@ export default function LoginPage() {
                 autoComplete="current-password"
                 style={{
                   width: '100%', padding: '12px 44px 12px 16px',
-                  background: '#1a1a26',
-                  border: error ? '1px solid rgba(239,68,68,0.5)' : '1px solid rgba(255,255,255,0.08)',
-                  borderRadius: '12px', color: '#f8fafc', fontSize: '15px',
+                  background: '#FAF7F0',
+                  border: error ? '1px solid rgba(192,57,43,0.5)' : '1px solid #E3DACA',
+                  borderRadius: '12px', color: '#2E2B24', fontSize: '15px',
                   outline: 'none', transition: 'border-color 0.15s',
                 }}
-                onFocus={e => { if (!error) e.target.style.borderColor = 'rgba(245,158,11,0.4)'; }}
-                onBlur={e => { if (!error) e.target.style.borderColor = 'rgba(255,255,255,0.08)'; }}
+                onFocus={e => { if (!error) e.target.style.borderColor = 'rgba(42,112,73,0.4)'; }}
+                onBlur={e => { if (!error) e.target.style.borderColor = '#E3DACA'; }}
               />
               <button
                 type="button"
                 onClick={() => setShowPass(s => !s)}
                 style={{
                   position: 'absolute', right: '12px', top: '50%', transform: 'translateY(-50%)',
-                  background: 'none', border: 'none', color: '#475569',
+                  background: 'none', border: 'none', color: '#7A7263',
                   cursor: 'pointer', fontSize: '16px', padding: '4px',
                 }}
               >{showPass ? '🙈' : '👁'}</button>
@@ -137,9 +124,9 @@ export default function LoginPage() {
 
           {error && (
             <div style={{
-              background: 'rgba(239,68,68,0.08)', border: '1px solid rgba(239,68,68,0.2)',
+              background: 'rgba(192,57,43,0.08)', border: '1px solid rgba(192,57,43,0.2)',
               borderRadius: '10px', padding: '10px 14px',
-              fontSize: '13px', color: '#f87171', display: 'flex', alignItems: 'center', gap: '8px',
+              fontSize: '13px', color: '#A32D22', display: 'flex', alignItems: 'center', gap: '8px',
             }}>
               <span>⚠️</span> {error}
             </div>
@@ -152,9 +139,9 @@ export default function LoginPage() {
               width: '100%', padding: '14px',
               borderRadius: '12px', border: 'none',
               background: (loading || !username || !password)
-                ? '#1a1a26'
-                : 'linear-gradient(135deg, #f59e0b, #d97706)',
-              color: (loading || !username || !password) ? '#475569' : '#000',
+                ? '#FAF7F0'
+                : 'linear-gradient(135deg, #2A7049, #256844)',
+              color: (loading || !username || !password) ? '#7A7263' : '#fff',
               fontWeight: 700, fontSize: '15px',
               cursor: (loading || !username || !password) ? 'not-allowed' : 'pointer',
               transition: 'all 0.2s ease',
@@ -165,8 +152,8 @@ export default function LoginPage() {
           </button>
         </form>
 
-        <p style={{ textAlign: 'center', fontSize: '12px', color: '#2d2d40', marginTop: '28px' }}>
-          SkyCafé Yönetim Sistemi
+        <p style={{ textAlign: 'center', fontSize: '12px', color: '#746C5C', marginTop: '28px' }}>
+          SKY PROTEIN BAR
         </p>
       </div>
     </div>

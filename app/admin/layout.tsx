@@ -63,13 +63,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }, []);
 
   return (
-    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', background: 'linear-gradient(rgba(10,10,15,0.60), rgba(10,10,15,0.70)), url(https://i.pinimg.com/736x/a0/e8/62/a0e862a298652353eeecba4aabe7564a.jpg) center/cover fixed' }}>
+    <div style={{ display: 'flex', height: '100vh', overflow: 'hidden', background: '#F4EFE5' }}>
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div
           onClick={() => setSidebarOpen(false)}
           style={{
-            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.7)',
+            position: 'fixed', inset: 0, background: 'rgba(46,43,36,0.4)',
             zIndex: 40, display: 'block'
           }}
           className="lg:hidden"
@@ -79,8 +79,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       {/* Sidebar */}
       <aside style={{
         width: '240px',
-        background: '#0d0d18',
-        borderRight: '1px solid rgba(255,255,255,0.05)',
+        background: '#EFE8DA',
+        borderRight: '1px solid #EFE8DA',
         display: 'flex',
         flexDirection: 'column',
         flexShrink: 0,
@@ -91,21 +91,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       className={`fixed lg:static h-full ${sidebarOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}`}
       >
         {/* Logo */}
-        <div style={{ padding: '28px 24px 20px', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <div style={{
-              width: '40px', height: '40px', borderRadius: '12px',
-              background: 'linear-gradient(135deg, #f59e0b, #d97706)',
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: '20px', flexShrink: 0
-            }}>☕</div>
-            <div>
-              <div style={{ fontWeight: 700, fontSize: '18px', letterSpacing: '-0.5px' }}>
-                <span className="text-gradient">Sky</span>
-                <span style={{ color: '#f8fafc' }}>Café</span>
-              </div>
-              <div style={{ fontSize: '11px', color: '#64748b', marginTop: '1px' }}>Site Kafe Yönetimi</div>
+        <div style={{ padding: '28px 24px 20px', borderBottom: '1px solid #EFE8DA' }}>
+          <div>
+            <div className="brand-title" style={{ fontSize: '15px', lineHeight: 1.35 }}>
+              SKY<br />PROTEIN BAR
             </div>
+            <div style={{ fontSize: '11px', color: '#746C5C', marginTop: '5px' }}>Yönetim Paneli</div>
           </div>
         </div>
 
@@ -122,13 +113,13 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                   display: 'flex', alignItems: 'center', gap: '12px',
                   padding: '11px 14px', borderRadius: '10px',
                   marginBottom: '4px', textDecoration: 'none',
-                  background: active ? 'rgba(245, 158, 11, 0.12)' : 'transparent',
-                  color: active ? '#f59e0b' : '#94a3b8',
+                  background: active ? 'rgba(42,112,73, 0.12)' : 'transparent',
+                  color: active ? '#2A7049' : '#6B6456',
                   fontWeight: active ? 600 : 400,
                   fontSize: '14px',
                   transition: 'all 0.15s ease',
                   position: 'relative',
-                  border: active ? '1px solid rgba(245,158,11,0.2)' : '1px solid transparent',
+                  border: active ? '1px solid rgba(42,112,73,0.2)' : '1px solid transparent',
                 }}
               >
                 <span style={{ fontSize: '16px' }}>{item.icon}</span>
@@ -136,7 +127,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 {item.href === '/admin/orders' && pendingCount > 0 && (
                   <span style={{
                     marginLeft: 'auto',
-                    background: '#ef4444',
+                    background: '#C0392B',
                     color: 'white',
                     fontSize: '11px',
                     fontWeight: 700,
@@ -152,7 +143,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </nav>
 
         {/* Footer */}
-        <div style={{ padding: '16px 20px', borderTop: '1px solid rgba(255,255,255,0.05)', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+        <div style={{ padding: '16px 20px', borderTop: '1px solid #EFE8DA', display: 'flex', flexDirection: 'column', gap: '12px' }}>
 
           {/* Dükkan aç/kapat — sadece admin */}
           {!isStaff && (
@@ -163,8 +154,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
               width: '100%', padding: '10px 14px', borderRadius: '12px',
               border: 'none', cursor: toggling ? 'wait' : 'pointer',
               background: shopOpen
-                ? 'rgba(34,197,94,0.12)'
-                : 'rgba(239,68,68,0.12)',
+                ? 'rgba(42,112,73,0.12)'
+                : 'rgba(192,57,43,0.12)',
               display: 'flex', alignItems: 'center', justifyContent: 'space-between',
               transition: 'all 0.2s ease',
             }}
@@ -172,10 +163,10 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
               <span style={{ fontSize: '16px' }}>{shopOpen ? '🟢' : '🔴'}</span>
               <div style={{ textAlign: 'left' }}>
-                <div style={{ fontSize: '12px', fontWeight: 700, color: shopOpen ? '#4ade80' : '#f87171' }}>
+                <div style={{ fontSize: '12px', fontWeight: 700, color: shopOpen ? '#256844' : '#A32D22' }}>
                   {shopOpen === null ? '...' : shopOpen ? 'AÇIK' : 'KAPALI'}
                 </div>
-                <div style={{ fontSize: '10px', color: '#475569', marginTop: '1px' }}>
+                <div style={{ fontSize: '10px', color: '#7A7263', marginTop: '1px' }}>
                   {shopOpen ? 'Sipariş alınıyor' : 'Sipariş kapalı'}
                 </div>
               </div>
@@ -183,7 +174,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             {/* Toggle pill */}
             <div style={{
               width: '36px', height: '20px', borderRadius: '10px',
-              background: shopOpen ? '#22c55e' : '#374151',
+              background: shopOpen ? '#2A7049' : '#C4B69C',
               position: 'relative', transition: 'background 0.2s',
               flexShrink: 0,
             }}>
@@ -200,8 +191,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           {/* Çıkış */}
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-              <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#22c55e', flexShrink: 0 }} />
-              <span style={{ fontSize: '11px', color: '#475569' }}>Sistem aktif</span>
+              <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: '#2A7049', flexShrink: 0 }} />
+              <span style={{ fontSize: '11px', color: '#7A7263' }}>Sistem aktif</span>
             </div>
             <button
               onClick={async () => {
@@ -209,12 +200,12 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 window.location.href = '/admin/login';
               }}
               style={{
-                background: 'none', border: 'none', color: '#475569',
+                background: 'none', border: 'none', color: '#7A7263',
                 fontSize: '12px', cursor: 'pointer', padding: '4px 8px',
                 borderRadius: '6px', transition: 'color 0.15s',
               }}
-              onMouseEnter={e => (e.currentTarget.style.color = '#f87171')}
-              onMouseLeave={e => (e.currentTarget.style.color = '#475569')}
+              onMouseEnter={e => (e.currentTarget.style.color = '#A32D22')}
+              onMouseLeave={e => (e.currentTarget.style.color = '#7A7263')}
             >Çıkış ↩</button>
           </div>
         </div>
@@ -224,8 +215,8 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
       <main style={{ flex: 1, overflow: 'auto', display: 'flex', flexDirection: 'column' }}>
         {/* Top bar */}
         <div style={{
-          height: '56px', background: '#0d0d18',
-          borderBottom: '1px solid rgba(255,255,255,0.05)',
+          height: '56px', background: '#EFE8DA',
+          borderBottom: '1px solid #EFE8DA',
           display: 'flex', alignItems: 'center', padding: '0 24px',
           justifyContent: 'space-between', flexShrink: 0,
           position: 'sticky', top: 0, zIndex: 30,
@@ -233,17 +224,17 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
           <button
             onClick={() => setSidebarOpen(true)}
             style={{
-              background: 'none', border: 'none', color: '#94a3b8',
+              background: 'none', border: 'none', color: '#6B6456',
               cursor: 'pointer', fontSize: '20px', padding: '4px',
             }}
             className="lg:hidden"
           >☰</button>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginLeft: 'auto' }}>
             <div style={{
-              background: isStaff ? 'rgba(59,130,246,0.1)' : 'rgba(245,158,11,0.1)',
-              border: `1px solid ${isStaff ? 'rgba(59,130,246,0.25)' : 'rgba(245,158,11,0.2)'}`,
+              background: isStaff ? 'rgba(37,99,235,0.1)' : 'rgba(42,112,73,0.1)',
+              border: `1px solid ${isStaff ? 'rgba(37,99,235,0.25)' : 'rgba(42,112,73,0.2)'}`,
               borderRadius: '8px', padding: '6px 14px',
-              fontSize: '13px', color: isStaff ? '#60a5fa' : '#f59e0b', fontWeight: 500
+              fontSize: '13px', color: isStaff ? '#1D4ED8' : '#2A7049', fontWeight: 500
             }}>
               {isStaff ? '👥' : '👤'} {username || (isStaff ? 'Personel' : 'Admin')}
               <span style={{ opacity: 0.6, marginLeft: '6px', fontSize: '11px' }}>
