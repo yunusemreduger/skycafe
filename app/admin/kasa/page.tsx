@@ -9,6 +9,19 @@ interface MenuItem { id: string; name: string; price: number; category: string; 
 const CATEGORY_ORDER = ['Smoothie', 'Kahve', 'Matcha'];
 const TL = (n: number) => '₺' + n.toLocaleString('tr-TR');
 
+/** "az önce" / "23 dk" / "2sa 15dk" */
+function sureMetni(iso: string): string {
+  const dk = Math.floor((Date.now() - new Date(iso).getTime()) / 60000);
+  if (dk < 1) return 'az önce';
+  if (dk < 60) return `${dk} dk`;
+  const sa = Math.floor(dk / 60);
+  const kalan = dk % 60;
+  return kalan ? `${sa}sa ${kalan}dk` : `${sa} saat`;
+}
+
+const saat = (iso: string) =>
+  new Date(iso).toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit' });
+
 export default function KasaPage() {
   const [tables, setTables] = useState<TableState[]>([]);
   const [menu, setMenu] = useState<MenuItem[]>([]);
@@ -193,7 +206,7 @@ export default function KasaPage() {
                 {dolu ? TL(t.total) : 'Boş'}
               </div>
               <div style={{ fontSize: '11px', color: '#475569', marginTop: '3px' }}>
-                {dolu ? `${t.itemCount} ürün` : 'Adisyon yok'}
+                {dolu ? `${t.itemCount} ürün · ${sureMetni(t.tab!.openedAt)}` : 'Adisyon yok'}
               </div>
             </button>
           );
@@ -245,8 +258,15 @@ export default function KasaPage() {
 
           {/* Adisyon */}
           <div style={{ background: '#12121a', border: '1px solid rgba(255,255,255,0.06)', borderRadius: '16px', padding: '18px', position: 'sticky', top: '12px' }}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
-              <span style={{ fontSize: '13px', fontWeight: 700, color: '#94a3b8' }}>Adisyon</span>
+            <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '14px' }}>
+              <div>
+                <div style={{ fontSize: '13px', fontWeight: 700, color: '#94a3b8' }}>Adisyon</div>
+                {current?.tab && (
+                  <div style={{ fontSize: '11px', color: '#475569', marginTop: '2px' }}>
+                    {saat(current.tab.openedAt)}&apos;de açıldı · {sureMetni(current.tab.openedAt)} önce
+                  </div>
+                )}
+              </div>
               {current?.tab && (
                 <button onClick={cancelTab} style={{
                   background: 'none', border: 'none', color: '#475569',
